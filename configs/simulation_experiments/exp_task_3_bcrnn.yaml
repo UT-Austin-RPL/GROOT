@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+- override /policy: bc_rnn_rgbd_policy
+- override /train/scheduler: cosine_annealing_warm_restarts
+
+
+benchmark_name: "VOS_3D_Simulation_RGBD_Benchmark"
+
+task_id: 3
+
+train:
+  grad_clip: 100.
+  n_epochs: 100
+  # batch_size: 64
+
+data:
+  obs:
+    modality:
+      pcd: []
+      wrist_depth: ["eye_in_hand_depth"]
+      low_dim: ["gripper_states", "joint_states"]
+      rgb: ["agentview_rgb"]
+      depth: ["agentview_depth"]
+
+  use_joint: true
+
+experiment_description: "BC-RNN Baseline"

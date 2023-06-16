@@ -1,0 +1,24 @@
+# @package _global_
+
+# default:
+
+# train:
+#   use_augmentation: true
+#   grad_clip: 100
+#   loss_scale: 1.0
+
+# eval:
+#   eval_every: 5
+#   n_epochs: 50
+
+data:
+  obs:
+    modality:
+      pcd: ["xyz"]
+
+policy:
+  pcd_aug:
+    network_kwargs:
+      mean: 0.0
+      std: 0.002
+      enabled: False

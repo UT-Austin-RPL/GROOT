@@ -1,0 +1,46 @@
+# @package _global_
+
+defaults:
+- override /policy: vos_3d_real_robot_masked_no_wrist_transformer_policy
+- override /policy/data_augmentation@policy.pcd_aug: se3_augmentation_3
+- override /train/scheduler: cosine_annealing_warm_restarts
+
+
+task_id: 5
+
+benchmark_name: VOS_3D_Real_Robot_Benchmark
+
+policy:
+  pcd_aug:
+    network_kwargs:
+      mean: 0.0
+      std: 0.001
+      use_position: True
+      enabled: True 
+      use_rotation: False
+      rot_range: [0.0, 0.0, 0.0]
+  # embed_size: 32
+  # transformer_head_output_size: 32
+  # transformer_mlp_hidden_size: 128
+
+train:
+  grad_clip: 100.
+  n_epochs: 100
+  # batch_size: 64
+
+data:
+  obs:
+    modality:
+      pcd: []
+      normalized_pcd: ["xyz"]
+      wrist_depth: []
+      low_dim: ["gripper_states", "joint_states"]
+      grouped_pcd: ["neighborhood_10_64", "centers_10_64"]
+
+  use_joint: true
+
+eval:
+  eval_every: 5
+
+
+experiment_description: "normalized point clouds, canonical, no aug dataset"

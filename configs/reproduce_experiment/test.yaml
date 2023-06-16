@@ -1,0 +1,22 @@
+# @package _global_
+
+benchmark_name: LIBERO_SPATIAL
+defaults:
+- override /lifelong: ewc
+- override /policy: bc_rnn_policy
+eval:
+  max_steps: 600
+policy:
+  language_encoder:
+    network_kwargs:
+      output_size: 32
+  translation_aug:
+    network_kwargs:
+      input_shape:
+      - 3
+      - 128
+      - 128
+seed: 100
+train:
+  grad_clip: 100
+  loss_scale: 3.0

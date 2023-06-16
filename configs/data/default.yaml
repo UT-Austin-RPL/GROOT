@@ -1,0 +1,48 @@
+# observation related
+data_modality:
+  - "image"
+  - "proprio"
+seq_len: 10
+frame_stack: 1
+use_eye_in_hand: true
+use_gripper: true
+use_joint: true
+use_ee: false
+
+max_word_len: 25
+
+state_dim: null
+num_kp: 64
+img_h: 128
+img_w: 128
+
+task_group_size: 1
+task_order_index: 0
+shuffle_task: false
+
+obs:
+    modality:
+        rgb: [] # ["agentview_rgb", "eye_in_hand_rgb"]
+        depth: []
+        low_dim: ["gripper_states", "joint_states"]
+        pcd: ["xyz", "rgb"]
+        wrist_depth: []
+
+# mapping from obs.modality keys to robosuite environment observation keys
+obs_key_mapping:
+  agentview_rgb: agentview_image
+  eye_in_hand_rgb: robot0_eye_in_hand_image
+  eye_in_hand_depth: robot0_eye_in_hand_depth
+  gripper_states: robot0_gripper_qpos
+  joint_states: robot0_joint_pos
+  ee_states: ee_states
+  xyz: xyz
+  # This is point cloud rgb, not images
+  rgb: rgb
+  neighborhood_10_64: neighborhood_10_64
+  centers_10_64: centers_10_64
+
+# action related
+affine_translate: 4
+action_scale: 1.0
+train_dataset_ratio: 0.8

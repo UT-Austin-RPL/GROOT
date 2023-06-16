@@ -1,0 +1,23 @@
+# @package _global_
+
+defaults:
+- override /policy: wrist_transformer_policy
+
+policy:
+  pcd_aug:
+    network_kwargs:
+      mean: 0.0
+      std: 0.002
+      use_position: True
+      enabled: True
+      use_rotation: True
+      rot_range: [0.1, 0.1, 0.1]
+
+data:
+  obs:
+    modality:
+      pcd: []
+      wrist_depth: ["eye_in_hand_depth"]
+
+train:
+  batch_size: 32

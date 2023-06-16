@@ -1,0 +1,10 @@
+network: MaskedPointNetEncoder
+network_kwargs:
+    group_cfg:
+      num_group: 10
+      group_size: 64
+    masked_encoder_cfg:
+      mask_ratio: 0.6
+      mask_type: "rand"
+      embed_dim: null
+    output_size: null

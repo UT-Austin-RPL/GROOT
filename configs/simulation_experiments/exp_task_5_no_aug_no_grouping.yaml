@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+- override /policy: vos_3d_object_transformer_policy
+- override /policy/data_augmentation@policy.pcd_aug: se3_augmentation_3
+- override /train/scheduler: cosine_annealing_warm_restarts
+benchmark_name: VOS_3D_No_Augmentation_Simulation_Benchmark
+data:
+  obs:
+    modality:
+      low_dim: [gripper_states, joint_states]
+      normalized_pcd: [xyz]
+      pcd: []
+      wrist_depth: [eye_in_hand_depth]
+  use_joint: true
+experiment_description: ''
+policy:
+  pcd_aug:
+    network_kwargs:
+      enabled: true
+      mean: 0.0
+      rot_range: [0.0, 0.0, 0.0]
+      std: 0.001
+      use_position: true
+      use_rotation: false
+
+task_id: 1
+train: {grad_clip: 100.0, n_epochs: 100}

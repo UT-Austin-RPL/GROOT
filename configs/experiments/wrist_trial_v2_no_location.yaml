@@ -1,0 +1,25 @@
+# @package _global_
+
+defaults:
+- override /policy: vos_3d_wrist_transformer_policy_v2
+- override /policy/data_augmentation@policy.pcd_aug: se3_augmentation_3
+
+policy:
+  pcd_aug:
+    network_kwargs:
+      mean: 0.0
+      std: 0.002
+      use_position: True
+      enabled: True
+      use_rotation: True
+      rot_range: [0.1, 0.1, 0.1]
+      location_range: [0, 0, 0]
+
+train:
+  grad_clip: 100.
+  n_epochs: 70
+
+data:
+  obs:
+    modality:
+      wrist_depth: ["eye_in_hand_depth"]

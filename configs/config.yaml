@@ -1,0 +1,37 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - data: default
+  - policy: vos_3d_transformer_policy
+  - train: default
+  - eval: default
+  - lifelong: vos_3d_single_task
+  - reproduce_experiment: null
+  - experiments: null
+  - aug_experiments: null
+  - normalized_experiments: null
+  - masked_experiments: null
+  - robot_masked_experiments: null
+  - ablation_dataset_aug_experiments: null
+  - ablation_grouping_experiments: null
+  - simulation_experiments: null
+  - real_robot_experiments: null
+  - viola_experiments: null
+  - mae_experiments: null
+  - test: null
+
+seed: 10000
+use_wandb: false
+wandb_project: "lifelong learning"
+folder: null # use default path
+bddl_folder: null # use default path
+init_states_folder: null # use default path
+load_previous_model: false
+device: "cuda"
+task_embedding_format: "bert"
+task_embedding_one_hot_offset: 1
+pretrain: false
+pretrain_model_path: ""
+benchmark_name: "VOS_3D_Benchmark"
+task_id: 0

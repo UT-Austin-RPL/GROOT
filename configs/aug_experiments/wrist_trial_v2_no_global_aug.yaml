@@ -1,0 +1,35 @@
+# @package _global_
+
+defaults:
+- override /policy: vos_3d_wrist_transformer_policy_v2
+- override /policy/data_augmentation@policy.pcd_aug: se3_augmentation_3
+
+task_id: 2
+
+policy:
+  pcd_aug:
+    network_kwargs:
+      mean: 0.0
+      std: 0.002
+      use_position: True
+      enabled: True
+      use_rotation: False
+      rot_range: [0, 0, 0]
+      location_range: [0, 0, 0]
+
+  # embed_size: 32
+  # transformer_head_output_size: 32
+  # transformer_mlp_hidden_size: 128
+
+train:
+  grad_clip: 100.
+  n_epochs: 70
+
+data:
+  obs:
+    modality:
+      pcd: ["xyz"]
+      wrist_depth: ["eye_in_hand_depth"]
+      low_dim: ["gripper_states"]
+
+  use_joint: false

@@ -1,0 +1,7 @@
+network: SE3Augmentation
+
+network_kwargs:
+  mean: 0.0
+  std: 0.02
+  enabled: True
+  rot_range: [0.1, 0.1, 0.1]

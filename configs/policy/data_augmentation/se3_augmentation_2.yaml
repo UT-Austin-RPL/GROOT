@@ -1,0 +1,10 @@
+network: SE3Augmentation2
+
+network_kwargs:
+  mean: 0.0
+  std: 0.02
+  enabled: True
+  use_position: True
+  use_rotation: True
+  location_range: [1., 1., 1.]
+  rot_range: [0.1, 0.1, 0.1]
