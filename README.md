@@ -1,5 +1,18 @@
 # **Learning Generalizable Manipulation Policies with Object-Centric 3D Representations** 
 
+
+<!-- 
+<p align="center">
+<img src="./imgs/pull_figure.png" height="100%">
+</p>
+ -->
+ 
+[Yifeng Zhu](https://www.cs.utexas.edu/~yifengz), [Zhenyu Jiang](https://zhenyujiang.me/), [Peter Stone](https://www.cs.utexas.edu/~pstone), [Yuke Zhu](https://www.cs.utexas.edu/~yukez/)
+
+
+[Project](https://ut-austin-rpl.github.io/GROOT) | [Paper]() | [Real-Robot Datasets](https://utexas.box.com/shared/static/cetscq2l0vwxbj1l9m5zwuz5swq3kk8y.zip)
+
+
 Our real robot experiments are based off of the codebase [Deoxys](https://github.com/UT-Austin-RPL/deoxys_control)
 
 # Getting Started
