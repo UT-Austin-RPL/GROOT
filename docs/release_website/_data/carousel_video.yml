@@ -1,0 +1,39 @@
+- class: item item-steve
+  id: "steve"
+  src: ./static/videos/steve.mp4
+  type: video/mp4
+
+- class: item item-chair-tp
+  id: "chair-tp"
+  src: ./static/videos/chair-tp.mp4
+  type: video/mp4
+
+- class: item item-shiba
+  id: "shiba"
+  src: ./static/videos/shiba.mp4
+  type: video/mp4
+
+- class: item item-fullbody
+  id: "fullbody"
+  src: ./static/videos/fullbody.mp4
+  type: video/mp4
+
+- class: item item-blueshirt
+  id: "blueshirt"
+  src: ./static/videos/blueshirt.mp4
+  type: video/mp4
+
+# - class: item item-mask
+#   id: "mask"
+#   src: ./static/videos/mask.mp4
+#   type: video/mp4
+
+# - class: item item-coffee
+#   id: "coffee"
+#   src: ./static/videos/coffee.mp4
+#   type: video/mp4
+
+# - class: item item-toby
+#   id: "toby"
+#   src: ./static/videos/toby2.mp4
+#   type: video/mp4

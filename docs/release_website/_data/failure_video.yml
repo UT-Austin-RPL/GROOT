@@ -1,0 +1,4 @@
+- class: item item-failure-1
+  id: "failure_1"
+  src: ./static/videos/failure_videos/1.mp4
+  type: video/mp4

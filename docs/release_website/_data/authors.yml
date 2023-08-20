@@ -1,0 +1,21 @@
+author_list:
+  - name: Yifeng Zhu
+    url: https://zhuyifengzju.github.io/
+    affliation: 1
+  - name: Zhenyu Jiang
+    url: https://zhenyujiang.me/
+    affliation: 1
+  - name: Peter Stone
+    url: https://cs.utexas.edu/~pstone
+    affliation: 1, 2
+  - name: Yuke Zhu
+    url: https://cs.utexas.edu/~yukez
+    affliation: 1
+  
+
+
+affliation_list:
+  - index: 1
+    name: The University of Texas, Austin
+  - index: 2
+    name: Sony AI

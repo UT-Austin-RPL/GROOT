@@ -1,0 +1,24 @@
+- class: item item-canonical
+  id: "canonical"
+  src: ./static/videos/real_robot_rollouts/roller_stamp_aug_demo_canonical.mp4
+  type: video/mp4
+  caption: "Canonical Setup"
+
+- class: item item-camera
+  id: "camera"
+  src: ./static/videos/real_robot_rollouts/roller_stamp_aug_demo_camera.mp4
+  type: video/mp4
+  caption: "Camera-Shift"
+
+- class: item item-background
+  id: "background"
+  src: ./static/videos/real_robot_rollouts/roller_stamp_aug_demo_distractions.mp4
+  type: video/mp4
+  caption: "Background-Change"
+
+- class: item item-new
+  id: "new"
+  src: ./static/videos/real_robot_rollouts/roller_stamp_aug_demo_new_instances.mp4
+  type: video/mp4
+  caption: "New-Object"
+

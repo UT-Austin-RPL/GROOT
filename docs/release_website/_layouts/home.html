@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning Generalizable Manipulation Policies with Object-Centric 3D Representations</title>
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ site.baseurl }}/static/css/bulma.min.css">
+  <!-- <link rel="stylesheet" href="{{ site.baseurl }}/static/css/bulma-carousel.min.css"> -->
+  <!-- <link rel="stylesheet" href="{{ site.baseurl }}/static/css/bulma-slider.min.css"> -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="icon" href="">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.1/chroma.min.js"></script>
+
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+  <script defer src="{{ site.baseurl }}/static/js/fontawesome.all.min.js"></script>
+  <!-- <script src="{{ site.baseurl }}/static/js/bulma-carousel.min.js"></script> -->
+  <!-- <script src="{{ site.baseurl }}/static/js/bulma-slider.min.js"></script> -->
+  <!-- Add the slick-theme.css if you want default styling -->
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <!-- Add the slick-theme.css if you want default styling -->
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script> -->
+
+  <link rel="stylesheet" href="{{ site.baseurl }}/static/css/index.css">
+
+  <script src="{{ site.baseurl }}/static/js/index.js"></script>
+
+</head>
+<body>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <!-- <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a> -->
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Learning Generalizable Manipulation Policies with Object-Centric 3D Representations</h1>
+          
+          <!-- include the title info. It's located in _includes/title_info.html -->
+          {% include title_info.html %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Video</h2> -->
+        <div class="publication-video">
+          <iframe src=""
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          We introduce GROOT, an imitation learning method with object-centric and 3D priors to learn robust policies for vision-based manipulation. GROOT is able to train policies that generalize beyond their initial training conditions. GROOT first constructs object-centric 3D representations that are robust to background changes and camera views, and reason over the representations using a transformer-based policy. At test time, we introduce a segmentation correspondence model that allows policies to reuse their strategies in the case of new object manipulation. Through comprehensive experiments, we validate the robustness of GROOT policies against perceptual variations in both simulated and real-world environments. Their performance excels in all aspects of considered generalization in perception, outperforming traditional pixel-based or object proposal prior methods. We also extensively evaluate GROOT policies on real robots, where we demonstrate the efficacy under very wild changes in setup.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<hr>
+<br>
+<br>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser" src="./static/images/teaser.svg" alt="Nerfies teaser image."/>
+      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video> -->
+      <h2 class="subtitle has-text-centered">
+         We introduce an imitation learning method, <span class="groot">GROOT</span>,  for training policies that generalize beyond their demonstration settings.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- Carousel Video Example. -->
+<!-- <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        {% for video in site.data.video_pick_place_mug %}
+            <div class="{{ video.class }}">
+              <div class="caption"> {{ video.caption }} </div>
+                <video poster="" id="{{ video.id }}" autoplay controls muted loop playsinline height="100%">
+                <source src="{{ video.src }}"
+                        type="{{ video.type }}">
+                </video>            </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- / Carousel Video Example. -->
+
+<hr>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method Overview. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method Overview</h2>
+        <div class="content has-text-justified">
+         Placeholder text. 
+        </div>
+      </div>
+    </div>
+    <!--/ Method. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video (TBD) </h2>
+        <div class="publication-video">
+          <iframe width="750" height="421" src="https://www.youtube.com/embed/DVFSPSa7GsQ?autoplay=1&mute=1&loop=1&playlist=DVFSPSa7GsQ" autoplay="true" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<hr>
+<br>
+<br>
+
+<section class="section">
+  <div id="real-robot-results-div">
+  </div>
+  <h3 style="text-align: center!important;" class="title is-5">Success rates (%) of GROOT in real robot tasks.</h3>
+</section>
+
+<br>
+
+<hr>
+<br>
+<br>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+
+      <!-- Visual Effects. -->
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Visual Effects</h2>
+          <p>
+            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
+            would be impossible without nerfies since it would require going through a wall.
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/dollyzoom-stacked.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <!--/ Visual Effects. -->
+
+      <!-- Matting. -->
+      <div class="column">
+        <h2 class="title is-3">Matting</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              As a byproduct of our method, we can also solve the matting problem by ignoring
+              samples that fall outside of a bounding box during rendering.
+            </p>
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/matting.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--/ Matting. -->
+    <!-- <div class="content" id="plotly-sam"></div> -->
+
+    <!-- Segmentation Correspondence Model. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Segmentation Correspondence Model</h2>
+
+        <!-- Interpolating. -->
+        <h3 class="title is-4">SAM result</h3>
+        <div class="content has-text-justified">
+          <p>
+            Use the mouse click to see the segmentation result on the initial frame of new object generalization rollotus. 
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column">
+            <div id="canvas-container">
+              <canvas id="image-canvas" width="480" height="480"></canvas>
+              <canvas id="mask-canvas" width="480" height="480"></canvas>
+            </div>
+          </div>
+          <div class="column">
+            <div id="canvas-container">
+              <canvas id="dino-image-canvas" width="480" height="480"></canvas>
+              <!-- <canvas id="mask-canvas" width="480" height="480"></canvas> -->
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_start.jpg"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Start Frame</p>
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_end.jpg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p class="is-bold">End Frame</p>
+          </div>
+        </div>
+        <br/>
+        <!--/ Interpolating. -->
+
+      </div>
+    </div>
+    <!--/ Segmentation Correspondence Model. -->
+</section>
+
+<br>
+<hr>
+<br>
+
+<!-- Carousel Video of Failure Rollouts. -->
+<section class="hero is-small">
+  <div class="hero-body">
+
+    <div class="container is-max-desktop">
+
+      <!-- Paper video. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Failure Example</h2>
+          <p> Some explanation. </p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="container">
+      {% assign num_videos = site.data.failure_video | size %}
+      
+      {% if num_videos > 3 %}
+      
+        <div id="failure-carousel" class="carousel failure-carousel">
+          {% for video in site.data.failure_video %}
+              <div class="{{ video.class }}">
+                  <video poster="" id="{{ video.id }}" autoplay controls muted loop playsinline height="100%">
+                  <source src="{{ video.src }}"
+                          type="{{ video.type }}">
+                  </video>
+              </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="video-container" style="display: flex; justify-content: center;">
+          {% for video in site.data.failure_video %}
+              <div class="{{ video.class }}" style="margin: 0 5px;">
+                  <video poster="" id="{{ video.id }}" autoplay controls muted loop playsinline height="100%">
+                  <source src="{{ video.src }}"
+                          type="{{ video.type }}">
+                  </video>
+              </div>
+          {% endfor %}
+        </div>
+
+      {% endif %}
+      
+    </div>
+  </div>
+</section>
+<!-- / Carousel Video of Failure Rollouts. -->
+
+<br><hr><br>
+<section class="section">
+  <div class="container is-max-desktop">
+    <a href="#" class="toggleButton" id="toggleButton-Pick-Place-Mug">Put the mug on the coaster ▼</a>
+    <!-- Content to be toggled -->
+    <div class="toggleContent" id="toggleContent-Pick-Place-Mug">
+      <div class="example-slick">
+        {% for video in site.data.video_pick_place_mug %}
+              <div class="{{ video.class }} is-centered">
+                  <div class="caption"> {{ video.caption }} </div>
+                  <video poster="" id="{{ video.id }}" autoplay controls muted loop playsinline height="100%">
+                  <source src="{{ video.src }}"
+                          type="{{ video.type }}">
+                  </video>            
+                  <br>
+              </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+  <br>
+  <div class="container is-max-desktop">
+    <a href="#" class="toggleButton" id="toggleButton-Stamp-Paper">Stamp the paper ▼</a>
+    <!-- Content to be toggled -->
+    <div class="toggleContent  initial-show" id="toggleContent-Stamp-Paper">
+      <div class="example-slick">
+        {% for video in site.data.video_stamp_paper %}
+              <div class="{{ video.class }} is-centered">
+                  <div class="caption"> {{ video.caption }} </div>
+                  <video poster="" id="{{ video.id }}" autoplay controls muted loop playsinline height="100%">
+                  <source src="{{ video.src }}"
+                          type="{{ video.type }}">
+                  </video>            
+                  <br>
+              </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<br>
+
+<div class="container is-max-desktop">
+  <a href="#" class="toggleButton" id="toggleButton-Pick-Place-Cup">Pick place cup ▼</a>
+  <!-- Content to be toggled -->
+  <div class="toggleContent  initial-show" id="toggleContent-Pick-Place-Cup">
+    <div class="example-slick">
+      {% for video in site.data.video_pick_place_cup %}
+            <div class="{{ video.class }} is-centered">
+                <div class="caption"> {{ video.caption }} </div>
+                <video poster="" id="{{ video.id }}" autoplay controls muted loop playsinline height="100%">
+                <source src="{{ video.src }}"
+                        type="{{ video.type }}">
+                </video>            
+                <br>
+            </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</section>
+<br>
+
+<div class="container is-max-desktop">
+  <a href="#" class="toggleButton" id="toggleButton-Take-The-Mug">Take the mug from the coaster ▼</a>
+  <!-- Content to be toggled -->
+  <div class="toggleContent  initial-show" id="toggleContent-Take-The-Mug">
+    <div class="example-slick">
+      {% for video in site.data.video_take_the_mug %}
+            <div class="{{ video.class }} is-centered">
+                <div class="caption"> {{ video.caption }} </div>
+                <video poster="" id="{{ video.id }}" autoplay controls muted loop playsinline height="100%">
+                <source src="{{ video.src }}"
+                        type="{{ video.type }}">
+                </video>            
+                <br>
+            </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</section>
+<br>
+
+<div class="container is-max-desktop">
+  <a href="#" class="toggleButton" id="toggleButton-Roller-Stamp">Roll the stamp ▼</a>
+  <!-- Content to be toggled -->
+  <div class="toggleContent  initial-show" id="toggleContent-Roller-Stamp">
+    <div class="example-slick">
+      {% for video in site.data.video_roller_stamp %}
+            <div class="{{ video.class }} is-centered">
+                <div class="caption"> {{ video.caption }} </div>
+                <video poster="" id="{{ video.id }}" autoplay controls muted loop playsinline height="100%">
+                <source src="{{ video.src }}"
+                        type="{{ video.type }}">
+                </video>            
+                <br>
+            </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</section>
+<br><hr><br>
+<!-- <section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+  title     = {Nerfies: Deformable Neural Radiance Fields},
+  journal   = {ICCV},
+  year      = {2021},
+}</code></pre>
+  </div>
+</section> -->
+
+  <!-- <div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link">
+      More Research
+    </a>
+    <div class="navbar-dropdown">
+      <a class="navbar-item" href="https://ut-austin-rpl.github.io/VIOLA/">
+        VIOLA
+      </a>
+      <a class="navbar-item" href="https://ut-austin-rpl.github.io/rpl-BUDS/">
+        BUDS
+      </a>
+    </div>
+  </div>
+</div> -->
+
+<footer class="footer">
+  <div class="container">
+
+    <div class="container is-max-desktop">
+      <!-- Method Overview. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Acknowledgement</h2>
+          <div class="content has-text-justified">
+            We would like to thank Jeffery Zhang, Vicent Cho, Yuzhe Qin for their helpful discussion on the project. This work has taken place in the Robot Perception and Learning Group (RPL) and Learning Agents Research Group (LARG) at UT Austin. RPL research has been partially supported by the National Science Foundation (CNS-1955523, FRR-2145283), the Office of Naval Research (N00014-22-1-2204), and the Amazon Research Awards. LARG research is supported in part by NSF (CPS-1739964, IIS-1724157, NRI-1925082), ONR (N00014-18-2243), FLI (RFP2-000), ARO (W911NF-19-2-0333), DARPA, Lockheed Martin, GM, and Bosch. Peter Stone serves as the Executive Director of Sony AI America and receives financial compensation for this work. The terms of this arrangement have been reviewed and approved by the University of Texas at Austin in accordance with its policy on objectivity in research.
+          </div>
+        </div>
+      </div>
+  </div>
+</footer>
+</body>
+</html>
