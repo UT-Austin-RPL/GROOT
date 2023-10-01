@@ -267,16 +267,6 @@ def main(args: argparse.Namespace) -> None:
         mask_images = [m["segmentation"] for m in masks]
         merged_mask, instance_dict = merge_segmentation_masks(mask_images)
         save_segmentation_mask(merged_mask, os.path.join(args.output, f"{demo_key}_mask.png"))
-        # print(merged_mask.shape)
-
-        # from skimage.measure import label
-        # from PIL import Image
-        # mask_images = [m["segmentation"] for m in masks]
-        # stacked_masks = np.stack(mask_images, axis=0).astype(np.uint8)  # Convert to 3D numpy array
-        # segmentation = label(stacked_masks)
-        # segmentation_image = Image.fromarray(segmentation.astype(np.uint8))
-        # segmentation_image.save(os.path.join(args.output, f"{demo_key}_mask.png"))
-
 
         base = os.path.basename(t)
         base = os.path.splitext(base)[0]

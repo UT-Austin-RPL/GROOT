@@ -9,6 +9,7 @@ import torch.nn.functional as F
 from pathlib import Path
 from torchvision import transforms
 
+from vos_3d_algo import GROOT_ROOT_PATH
 
 from third_party.XMem.model.network import XMem
 from third_party.XMem.inference.inference_core import InferenceCore
@@ -33,13 +34,13 @@ class XMemTracker:
     """
      This is a wrapper over XMem tracker.
     """
-    def __init__(self, xmem_checkpoint, device, sam_model=None, model_type=None, half_mode=False) -> None:
+    def __init__(self, xmem_checkpoint, device, half_mode=False) -> None:
         """
         device: model device
         xmem_checkpoint: checkpoint of XMem model
         """
         # load configurations
-        with open(os.path.join(FOLDER_PATH, "../xmem_config.yaml"), 'r') as stream: 
+        with open(os.path.join(GROOT_ROOT_PATH, "vision_model_configs/xmem_config.yaml"), 'r') as stream: 
             config = yaml.safe_load(stream) 
         # initialise XMem
         network = XMem(config, xmem_checkpoint).to(device).eval()

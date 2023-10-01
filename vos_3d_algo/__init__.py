@@ -6,6 +6,9 @@ import numpy as np
 from robomimic.utils.obs_utils import Modality, process_frame
 from libero.libero.benchmark import get_benchmark, Benchmark, task_maps, register_benchmark
 
+FILE_PATH = os.path.dirname(__file__)
+GROOT_ROOT_PATH = os.path.join(FILE_PATH, "..")
+
 
 class GroupedPcdModality(Modality):
     name = "grouped_pcd"

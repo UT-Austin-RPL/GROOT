@@ -1,0 +1,21 @@
+benchmark: False
+disable_long_term: False
+enable_long_term: True
+enable_long_term_count_usage: True
+max_mid_term_frames: 10
+min_mid_term_frames: 5
+max_long_term_elements: 10000
+num_prototypes: 128
+buffer_size: 100
+top_k: 30
+mem_every: 5
+deep_update_every: -1
+save_scores: False
+flip: False
+size: 480
+enable_long_term: True
+enable_long_term_count_usage: True
+
+model: './xmem_checkpoints/XMem.pth'
+s2m_model: 'xmem_checkpoints/s2m.pth'
+fbrs_model: 'xmem_checkpoins/fbrs.pth'

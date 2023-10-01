@@ -14,9 +14,7 @@ try:
 except:
     pass
 
-
-
-def convert_convention(image, real_robot=False):
+def convert_convention(image, real_robot=True):
     if not real_robot:
         if macros.IMAGE_CONVENTION == "opencv":
             return np.ascontiguousarray(image[::1])

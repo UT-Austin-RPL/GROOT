@@ -17,7 +17,7 @@ from dinov2.eval.utils import ModelWithIntermediateLayers
 
 from sklearn.decomposition import PCA
 
-from kaede_utils.visualization_utils.video_utils import KaedeVideoWriter
+from vos_3d_algo.misc_utils import VideoWriter
 
 class DinoV2ImageProcessor(object):
     def __init__(self, args=None):
@@ -26,7 +26,7 @@ class DinoV2ImageProcessor(object):
             self.args.output_dir = ''
             self.args.opts = []
             self.args.pretrained_weights = "https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth"
-            self.args.config_file = "dinov2/dinov2/configs/eval/vitb14_pretrain.yaml"
+            self.args.config_file = "third_party/dinov2/dinov2/configs/eval/vitb14_pretrain.yaml"
         else:
             self.args = args
         # print("*****")
@@ -99,6 +99,63 @@ def rescale_feature_map(img_tensor, target_h, target_w, convert_to_numpy=True):
         return img_tensor.cpu().numpy()
     else:
         return img_tensor
+    
+def generate_video_from_affinity(source_image, 
+                                 target_image, 
+                                 source_feature, 
+                                 target_feature, 
+                                 video_path="./",
+                                 video_name="./dinov2_tmp_video.mp4", 
+                                 h=32,
+                                 w=32,
+                                 patch_size=14):
+    """_summary_
+
+    Args:
+        source_image (_type_): _description_
+        target_image (_type_): _description_
+        source_feature_list (_type_): _description_
+        target_feature_list (_type_): _description_
+        video_path (str, optional): _description_. Defaults to "./dinov2_tmp_video.mp4".
+        h (int, optional): _description_. Defaults to 32.
+        w (int, optional): _description_. Defaults to 32.
+        patch_size (int, optional): _description_. Defaults to 14.
+    """    
+    aff = compute_affinity((source_feature, h, w), (target_feature, h, w)) 
+    aff = rescale_feature_map(aff, target_image.shape[0], target_image.shape[1])
+    img_size = source_image.shape[0]
+
+    video_writer = VideoWriter(video_path, video_name=video_name, save_video=True, fps=5)
+    
+    for i in range(0, source_image.shape[1] // patch_size):
+        for j in range(0, source_image.shape[0] // patch_size):
+            source_image_mark = cv2.rectangle(source_image.copy(), 
+                                              (i * patch_size, j * patch_size), 
+                                              ((i+1) * patch_size, (j+1) * patch_size), 
+                                              (0, 0, 1.0), 3)
+            
+            select_aff = aff[int((j * patch_size) * h / source_image.shape[0]):int(((j+1) * patch_size) * h / source_image.shape[0]),
+                             int((i * patch_size) * w / source_image.shape[1]):int(((i+1) * patch_size) * w / source_image.shape[1])]
+
+            select_aff = select_aff.copy().mean(axis=0).mean(axis=0)
+            max_y, max_x = np.unravel_index(select_aff.argmax(), select_aff.shape)
+
+            normalized_heatmap = 255 - cv2.normalize(select_aff, None, alpha=0, beta=255, 
+                                                     norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8UC1)
+
+            heatmap_3ch = cv2.merge([normalized_heatmap]*3)
+            colormap = cv2.applyColorMap(normalized_heatmap, cv2.COLORMAP_JET)
+
+            alpha = 0.5
+            overlaid_image = cv2.addWeighted(target_image.copy().astype(np.uint8), 1-alpha, colormap, alpha, 0)
+            overlaid_image = cv2.circle(overlaid_image, (max_x, max_y), 9, (128, 0, 128), -1)
+
+            final_image = np.concatenate([cv2.resize(source_image_mark, (img_size, img_size)), overlaid_image], axis=1)
+            video_writer.append_image(final_image)
+
+    saved_video_file = video_writer.save(flip=True, bgr=False) 
+    return saved_video_file
+
 
 if __name__ == "__main__":
     setup_args_parser = get_setup_args_parser(add_help=False)
@@ -133,7 +190,7 @@ if __name__ == "__main__":
 
     img_size = frame1_img.shape[0]
 
-    video_writer = KaedeVideoWriter("./", save_video=True, fps=5)
+    video_writer = VideoWriter("./", save_video=True, fps=5)
     print(frame1_img.shape)
     for i in range(0, frame1_img.shape[1] // patch_size):
         for j in range(0, frame1_img.shape[0] // patch_size):

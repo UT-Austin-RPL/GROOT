@@ -1,0 +1,12 @@
+points_per_side: 32 # type: int or null
+points_per_batch: 64 # type: int
+pred_iou_thresh: 0.88 # type: float
+stability_score_thresh: 0.95 # type: float
+stability_score_offset: 1.0 # type: float
+box_nms_thresh: 0.7 # type: float
+crop_n_layers: 0 # type: int
+crop_nms_thresh: 0.7 # type: float
+crop_overlap_ratio: 0.3413333333333333 # (512/1500) type: float
+crop_n_points_downscale_factor: 1 # type: int
+point_grids: null # type: List[np.ndarray] or null
+min_mask_region_area: 0 # type: int
