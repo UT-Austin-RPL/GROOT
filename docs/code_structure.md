@@ -52,3 +52,18 @@ groot/
     # data
     reference_images/              # default folder to save images for references
     target_images                  # saved annotation images from segmentation correspondence model
+
+
+    # third party models (Large vision models)
+    ## Configuration
+    vision_model_configs/
+        xmem_config.yaml 
+        sam_config.yaml
+    ## Third party code repo
+    third_party/
+        XMem/
+        segment-anything/
+        dinov2/
+        # checkpoints
+        xmem_checkpoints/
+        sam_checkpoints/

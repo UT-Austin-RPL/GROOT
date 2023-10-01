@@ -5,6 +5,7 @@ import cv2
 import imageio
 import h5py
 import numpy as np
+import plotly.express as px
 
 from PIL import Image
 from third_party.XMem.util.palette import davis_palette
@@ -141,13 +142,37 @@ def add_palette_on_mask(mask_img, palette="davis", alpha=1.0):
         new_mask_img = set_pillow_image_alpha(new_mask_img, alpha)
     return new_mask_img
 
-def resize_image_to_same_shape(source_img, reference_img):
+def resize_image_to_same_shape(source_img, reference_img=None, reference_size=None):
     # if source_img is larger than reference_img
-    if source_img.shape[0] > reference_img.shape[0] or source_img.shape[1] > reference_img.shape[1]:
-        result_img = cv2.resize(source_img, (reference_img.shape[1], reference_img.shape[0]), interpolation=cv2.INTER_NEAREST)
+    if reference_img is None and reference_size is None:
+        raise ValueError("Either reference_img or reference_size must be specified.")
+    if reference_img is not None:
+        reference_size = (reference_img.shape[0], reference_img.shape[1])
+    if source_img.shape[0] >  reference_size[0] or source_img.shape[1] > reference_size[1]:
+        result_img = cv2.resize(source_img, (reference_size[0], reference_size[1]), interpolation=cv2.INTER_NEAREST)
     else:
-        result_img = cv2.resize(source_img, (reference_img.shape[1], reference_img.shape[0]), interpolation=cv2.INTER_AREA)
+        result_img = cv2.resize(source_img, (reference_size[0], reference_size[1]), interpolation=cv2.INTER_AREA)
     return result_img
+
+
+def plotly_draw_seg_image(image, mask):
+    fig = px.imshow(image)
+
+    fig.data[0].customdata = mask
+    # fig.data[0].hovertemplate = '<b>Mask ID:</b> %{customdata}'
+    fig.data[0].hovertemplate = 'x: %{x}<br>y: %{y}<br>Mask ID: %{customdata}'
+
+
+    fig.update_layout(
+        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        showlegend=False,
+        width=300,   # you can adjust this as needed
+        height=300,   # you can adjust this as needed
+        margin=dict(l=0, r=0, b=0, t=0)
+    )
+
+    fig.show()
 
 
 def edit_h5py_datasets(base_dataset_name, additional_dataset_name, mode="merge  "):

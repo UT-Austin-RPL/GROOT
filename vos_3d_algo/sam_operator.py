@@ -119,6 +119,13 @@ class SAMOperator:
         cv2.imwrite(filepath, (overall_mask * 255).astype(np.uint8))
         if verbose:
             print(f"Saved overall mask to {filepath}.")
+    
+    def get_individual_masks_from_raw(self, raw_data):
+        masks = []
+        for i, mask_data in enumerate(raw_data):
+            mask = mask_data["segmentation"]
+            masks.append(mask * 255)
+        return masks
 
     def segment_image(self, 
                       image,
@@ -135,7 +142,7 @@ class SAMOperator:
                 overall_mask = self.show_anns(masks)
 
             return {
-                "masks": masks,
+                "raw_data": masks,
                 "merged_mask": merged_mask,
                 "overall_mask": overall_mask,
             }
