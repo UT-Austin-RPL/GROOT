@@ -14,7 +14,7 @@ cd ..
 
 mkdir xmem_checkpoints
 
-mv XMem/*pth xmem_checkpoints/
+mv XMem/saves/*pth xmem_checkpoints/
 
 # dinov2
 git clone git@github.com:facebookresearch/dinov2.git
@@ -30,5 +30,6 @@ git checkout 6fdee8f2727f4506cfbbe553e23b895e27956588
 
 cd ..
 mkdir sam_checkpoints
+cd sam_checkpoints
 wget https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
 
