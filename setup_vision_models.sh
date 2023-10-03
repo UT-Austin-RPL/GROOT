@@ -19,6 +19,8 @@ mv XMem/saves/*pth xmem_checkpoints/
 git clone git@github.com:facebookresearch/dinov2.git
 cd dinov2
 git checkout fc49f49d734c767272a4ea0e18ff2ab8e60fc92d
+pip install -r requirements.txt
+pip install -e .
 
 cd ..
 
@@ -26,6 +28,7 @@ cd ..
 git clone https://github.com/facebookresearch/segment-anything
 cd segment-anything
 git checkout 6fdee8f2727f4506cfbbe553e23b895e27956588
+pip install -e .
 
 cd ..
 mkdir sam_checkpoints
