@@ -5,12 +5,17 @@ import cv2
 import imageio
 import h5py
 import numpy as np
-import plotly.express as px
 
+import plotly.express as px
+import robosuite.utils.transform_utils as T
+import traceback
+import time
+import inspect
+import signal
 from PIL import Image
 from third_party.XMem.util.palette import davis_palette
 
-def get_annotation_path(dataset_name, parent_folder="annotations"):
+def get_annotation_path(dataset_name, parent_folder="datasets/annotations"):
     dataset_folder_name = dataset_name.split("/")[-1].replace(".hdf5", "")
     annotations_folder = os.path.join(parent_folder, dataset_folder_name)
     return annotations_folder
@@ -174,6 +179,55 @@ def plotly_draw_seg_image(image, mask):
 
     fig.show()
 
+def rotate_camera_pose(camera_pose, angle=-10, point=[0, 0, 0], axis=[0, 0, 1]):   
+    rad = np.pi * angle / 180.0
+
+    homo_rot_z = T.make_pose(np.array([0., 0., 0.]), T.quat2mat(T.axisangle2quat(np.array(axis) * rad)))
+    
+    new_camera_pose = camera_pose.copy()
+    new_camera_pose[:3, 3] = new_camera_pose[:3, 3] - np.array(point)
+    new_camera_pose = homo_rot_z @ new_camera_pose
+    new_camera_pose[:3, 3] = new_camera_pose[:3, 3] + np.array(point)
+
+    return new_camera_pose
+
+
+def get_transformed_depth_img(point_cloud, 
+                              camera_intrinsics,
+                              new_camera_extrinsics,
+                              camera_width,
+                              camera_height):
+        
+
+        new_point_cloud = np.concatenate((point_cloud, np.ones((point_cloud.shape[0], 1))), axis=-1)
+        new_point_cloud = np.linalg.inv(new_camera_extrinsics) @ new_point_cloud.T
+
+        fx = camera_intrinsics[0, 0]
+        fy = camera_intrinsics[1, 1]
+        cx = camera_intrinsics[0, 2]
+        cy = camera_intrinsics[1, 2]
+
+        z = new_point_cloud[2, :] * 1000
+        u = fx * new_point_cloud[0, :] * 1000 / z + cx
+        v = fy * new_point_cloud[1, :] * 1000 / z + cy
+
+        px = u.astype(np.int32)
+        py = v.astype(np.int32)
+
+        new_depth_img = np.ones((camera_height, camera_width)) * z.max()
+        sorted_indices = np.argsort(z)[::-1]
+
+        px = px[sorted_indices]
+        py = py[sorted_indices]
+        z = z[sorted_indices]
+
+        valid_indices = (px >= 0) & (px < camera_width) & (py >= 0) & (py < camera_height)
+
+        new_depth_img[py[valid_indices], px[valid_indices]] = np.minimum(
+                                    new_depth_img[py[valid_indices], px[valid_indices]], z[valid_indices]
+                                )
+        new_depth_img = new_depth_img.astype(np.uint16)
+        return new_depth_img, z.max()
 
 def edit_h5py_datasets(base_dataset_name, additional_dataset_name, mode="merge  "):
     # load base dataset in an edit mode
@@ -187,7 +241,7 @@ def edit_h5py_datasets(base_dataset_name, additional_dataset_name, mode="merge  
         # merge mode
         if mode == "merge":
             for demo in base_dataset["data"].keys():
-                print(demo)
+                # print(demo)
                 for key in additional_dataset[f"data/{demo}/obs"].keys():
                     # if key in base_dataset[f"data/{demo}/obs"].keys():
                     #     print("Warning")
@@ -209,10 +263,16 @@ def edit_h5py_datasets(base_dataset_name, additional_dataset_name, mode="merge  
 
     base_dataset.close()
     additional_dataset.close()
+ 
+
+def normalize_pcd(obs, max_array, min_array):
+    max_array = np.array(max_array, dtype=np.float32)
+    min_array = np.array(min_array, dtype=np.float32)
+    return (obs - min_array) / (max_array - min_array)
 
 
 class VideoWriter():
-    def __init__(self, video_path, save_video=False, video_name=None, fps=30, single_video=True):
+    def __init__(self, video_path, video_name=None, fps=30, single_video=True, save_video=False):
         self.video_path = video_path
         self.save_video = save_video
         self.fps = fps
@@ -277,4 +337,34 @@ class VideoWriter():
 
 
 
-            
+class Timer:
+    def __init__(self, unit="second", verbose=False):
+        if unit == "second":
+            self.factor = 10 ** 9
+        elif unit == "millisecond":
+            self.factor = 10 ** 6
+        elif unit == "microsecond":
+            self.factor = 10 ** 3
+        
+        self.verbose = verbose
+        self.value = None
+
+    def __enter__(self):
+        frame = inspect.currentframe()
+        self.line_number = frame.f_back.f_lineno
+        self.filename = inspect.getframeinfo(frame.f_back).filename
+        self.start_time = time.time_ns()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        end_time = time.time_ns()
+        elapsed_time = (end_time - self.start_time) / self.factor
+        if self.verbose:
+            print(f"{elapsed_time} seconds to execute in the block of {self.filename}: {self.line_number}.")
+
+        self.value = elapsed_time
+
+        return None        
+
+    def get_elapsed_time(self):
+        return self.value
