@@ -300,6 +300,8 @@ def pcd_grouping(
             pcd_grouped_dataset[f"data/{demo_key}/obs"].create_dataset(f"neighborhood_{num_group}_{group_size}", data=neighborhood.cpu().numpy())
             pcd_grouped_dataset[f"data/{demo_key}/obs"].create_dataset(f"centers_{num_group}_{group_size}", data=centers.cpu().numpy())
 
+            pcd_grouped_dataset[f"data/{demo_key}/obs"].create_dataset(f"xyz", data=xyz_sequence)
+
 # def worker_fn(xyz_sequence_dict, cfg, demo_keys_chunk, tmp_file):
 #     with h5py.File(tmp_file, 'w') as tmp_hdf5:
         

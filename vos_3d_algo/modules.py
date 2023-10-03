@@ -30,92 +30,93 @@ class PointNetEncoder(nn.Module):
         feature = self.linear_projection(feature)
         return feature
     
+# TODO: Delete
+# class SE3Augmentation(nn.Module):
+#     def __init__(self, 
+#                  mean=0.0, 
+#                  std=0.02, 
+#                  enabled=True, 
+#                  use_position=True,
+#                  use_rotation=False,
+#                  rot_range=(np.pi / 3, np.pi / 3, np.pi / 3)):
+#         super().__init__()
+#         self.mean = mean
+#         self.std = std
+#         self.enabled = enabled
+#         self.use_position = use_position
+#         self.use_rotation = use_rotation
 
-class SE3Augmentation(nn.Module):
-    def __init__(self, 
-                 mean=0.0, 
-                 std=0.02, 
-                 enabled=True, 
-                 use_position=True,
-                 use_rotation=False,
-                 rot_range=(np.pi / 3, np.pi / 3, np.pi / 3)):
-        super().__init__()
-        self.mean = mean
-        self.std = std
-        self.enabled = enabled
-        self.use_position = use_position
-        self.use_rotation = use_rotation
+#         self.placeholder_mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
+#         self.rot_x, self.rot_y, self.rot_z = rot_range
 
-        self.placeholder_mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
-        self.rot_x, self.rot_y, self.rot_z = rot_range
-
-    def forward(self, point_set):
-        # Only apply augmentation if training
-        if self.training and self.enabled:
-            # theta = torch.rand(1) * 2 * np.pi
-            # rotation_matrix = torch.tensor([[torch.cos(theta), -torch.sin(theta)],
-            #                                 [torch.sin(theta), torch.cos(theta)]]).to(point_set.device)
-            point_shape = point_set.shape
-            start_dims = np.arange(len(point_shape) - 2).tolist()
-            point_set = point_set.permute(start_dims + [-1, -2])
-            if self.use_rotation:
-                rotation_matrix = self.placeholder_mesh.get_rotation_matrix_from_xyz((np.random.uniform(-self.rot_x, self.rot_x), np.random.uniform(-self.rot_y, self.rot_y), np.random.uniform(-self.rot_z, self.rot_z)))
-                rotation_matrix = torch.from_numpy(np.array(rotation_matrix)).float().to(point_set.device)
-                point_set[..., :] = point_set[..., :].matmul(rotation_matrix)
-            if self.use_position:
-                point_set += torch.normal(self.mean, self.std, size=point_set.shape).to(point_set.device)
-            point_set = point_set.permute(start_dims + [-1, -2])
-        elif False: # self.enabled:
-            # see if rotation augmentation needs to be turned on during evaluation
-            point_shape = point_set.shape
-            start_dims = np.arange(len(point_shape) - 2).tolist()
-            point_set = point_set.permute(start_dims + [-1, -2])
-            if self.use_rotation:
-                rotation_matrix = self.placeholder_mesh.get_rotation_matrix_from_xyz((np.random.uniform(-self.rot_x, self.rot_x), np.random.uniform(-self.rot_y, self.rot_y), np.random.uniform(-self.rot_z, self.rot_z)))
-                rotation_matrix = torch.from_numpy(np.array(rotation_matrix)).float().to(point_set.device)
-                point_set[..., :] = point_set[..., :].matmul(rotation_matrix)
-            point_set = point_set.permute(start_dims + [-1, -2])
-        return point_set
+#     def forward(self, point_set):
+#         # Only apply augmentation if training
+#         if self.training and self.enabled:
+#             # theta = torch.rand(1) * 2 * np.pi
+#             # rotation_matrix = torch.tensor([[torch.cos(theta), -torch.sin(theta)],
+#             #                                 [torch.sin(theta), torch.cos(theta)]]).to(point_set.device)
+#             point_shape = point_set.shape
+#             start_dims = np.arange(len(point_shape) - 2).tolist()
+#             point_set = point_set.permute(start_dims + [-1, -2])
+#             if self.use_rotation:
+#                 rotation_matrix = self.placeholder_mesh.get_rotation_matrix_from_xyz((np.random.uniform(-self.rot_x, self.rot_x), np.random.uniform(-self.rot_y, self.rot_y), np.random.uniform(-self.rot_z, self.rot_z)))
+#                 rotation_matrix = torch.from_numpy(np.array(rotation_matrix)).float().to(point_set.device)
+#                 point_set[..., :] = point_set[..., :].matmul(rotation_matrix)
+#             if self.use_position:
+#                 point_set += torch.normal(self.mean, self.std, size=point_set.shape).to(point_set.device)
+#             point_set = point_set.permute(start_dims + [-1, -2])
+#         elif False: # self.enabled:
+#             # see if rotation augmentation needs to be turned on during evaluation
+#             point_shape = point_set.shape
+#             start_dims = np.arange(len(point_shape) - 2).tolist()
+#             point_set = point_set.permute(start_dims + [-1, -2])
+#             if self.use_rotation:
+#                 rotation_matrix = self.placeholder_mesh.get_rotation_matrix_from_xyz((np.random.uniform(-self.rot_x, self.rot_x), np.random.uniform(-self.rot_y, self.rot_y), np.random.uniform(-self.rot_z, self.rot_z)))
+#                 rotation_matrix = torch.from_numpy(np.array(rotation_matrix)).float().to(point_set.device)
+#                 point_set[..., :] = point_set[..., :].matmul(rotation_matrix)
+#             point_set = point_set.permute(start_dims + [-1, -2])
+#         return point_set
     
-class SE3Augmentation2(nn.Module):
-    def __init__(self, 
-                 mean=0.0, 
-                 std=0.02, 
-                 enabled=True, 
-                 use_position=True,
-                 use_rotation=True,
-                 location_range=(1., 1., 1.),
-                 rot_range=(np.pi / 3, np.pi / 3, np.pi / 3)):
-        super().__init__()
-        self.mean = mean
-        self.std = std
-        self.enabled = enabled
-        self.use_position = use_position
-        self.use_rotation = use_rotation
+# (TODO): Delete
+# class SE3Augmentation2(nn.Module):
+#     def __init__(self, 
+#                  mean=0.0, 
+#                  std=0.02, 
+#                  enabled=True, 
+#                  use_position=True,
+#                  use_rotation=True,
+#                  location_range=(1., 1., 1.),
+#                  rot_range=(np.pi / 3, np.pi / 3, np.pi / 3)):
+#         super().__init__()
+#         self.mean = mean
+#         self.std = std
+#         self.enabled = enabled
+#         self.use_position = use_position
+#         self.use_rotation = use_rotation
 
-        self.placeholder_mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
-        self.rot_x, self.rot_y, self.rot_z = rot_range
-        self.location_range = torch.tensor(location_range)
+#         self.placeholder_mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
+#         self.rot_x, self.rot_y, self.rot_z = rot_range
+#         self.location_range = torch.tensor(location_range)
 
-    def forward(self, point_set):
-        # Only apply augmentation if training
-        if self.training and self.enabled:
-            # theta = torch.rand(1) * 2 * np.pi
-            # rotation_matrix = torch.tensor([[torch.cos(theta), -torch.sin(theta)],
-            #                                 [torch.sin(theta), torch.cos(theta)]]).to(point_set.device)
-            point_shape = point_set.shape
-            start_dims = np.arange(len(point_shape) - 2).tolist()
-            point_set = point_set.permute(start_dims + [-1, -2])
-            if self.use_rotation:
-                rotation_matrix = self.placeholder_mesh.get_rotation_matrix_from_xyz((np.random.uniform(-self.rot_x, self.rot_x), np.random.uniform(-self.rot_y, self.rot_y), np.random.uniform(-self.rot_z, self.rot_z)))
-                rotation_matrix = torch.from_numpy(np.array(rotation_matrix)).float().to(point_set.device)
-                point_set[..., :] = point_set[..., :].matmul(rotation_matrix)
-                translation = torch.rand(3) * self.location_range
-                point_set[..., :] += translation.to(point_set.device)
-            if self.use_position:
-                point_set += torch.normal(self.mean, self.std, size=point_set.shape).to(point_set.device)
-            point_set = point_set.permute(start_dims + [-1, -2])
-        return point_set
+#     def forward(self, point_set):
+#         # Only apply augmentation if training
+#         if self.training and self.enabled:
+#             # theta = torch.rand(1) * 2 * np.pi
+#             # rotation_matrix = torch.tensor([[torch.cos(theta), -torch.sin(theta)],
+#             #                                 [torch.sin(theta), torch.cos(theta)]]).to(point_set.device)
+#             point_shape = point_set.shape
+#             start_dims = np.arange(len(point_shape) - 2).tolist()
+#             point_set = point_set.permute(start_dims + [-1, -2])
+#             if self.use_rotation:
+#                 rotation_matrix = self.placeholder_mesh.get_rotation_matrix_from_xyz((np.random.uniform(-self.rot_x, self.rot_x), np.random.uniform(-self.rot_y, self.rot_y), np.random.uniform(-self.rot_z, self.rot_z)))
+#                 rotation_matrix = torch.from_numpy(np.array(rotation_matrix)).float().to(point_set.device)
+#                 point_set[..., :] = point_set[..., :].matmul(rotation_matrix)
+#                 translation = torch.rand(3) * self.location_range
+#                 point_set[..., :] += translation.to(point_set.device)
+#             if self.use_position:
+#                 point_set += torch.normal(self.mean, self.std, size=point_set.shape).to(point_set.device)
+#             point_set = point_set.permute(start_dims + [-1, -2])
+#         return point_set
     
     
 class SE3Augmentation3(nn.Module):
@@ -180,39 +181,40 @@ class SE3Augmentation3(nn.Module):
             point_set = rearrange(point_set, 'B (T O D) N -> B T O N D', T=T, O=O, D=D)
         return point_set
 
-class SE3ConstrastiveAugmentation(nn.Module):
-    def __init__(self, 
-                 mean=0.0, 
-                 std=0.02, 
-                 enabled=True, 
-                 use_position=True,
-                 use_rotation=False,
-                 rot_range=(np.pi / 3, np.pi / 3, np.pi / 3),
-                 num_constrast=4):
-        super().__init__()
-        self.mean = mean
-        self.std = std
-        self.enabled = enabled
-        self.use_position = use_position
-        self.use_rotation = use_rotation
+# (TODO): Delete
+# class SE3ConstrastiveAugmentation(nn.Module):
+#     def __init__(self, 
+#                  mean=0.0, 
+#                  std=0.02, 
+#                  enabled=True, 
+#                  use_position=True,
+#                  use_rotation=False,
+#                  rot_range=(np.pi / 3, np.pi / 3, np.pi / 3),
+#                  num_constrast=4):
+#         super().__init__()
+#         self.mean = mean
+#         self.std = std
+#         self.enabled = enabled
+#         self.use_position = use_position
+#         self.use_rotation = use_rotation
 
-        self.num_constrast = num_constrast
+#         self.num_constrast = num_constrast
 
-        self.placeholder_mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
-        self.rot_x, self.rot_y, self.rot_z = rot_range
+#         self.placeholder_mesh = o3d.geometry.TriangleMesh.create_coordinate_frame()
+#         self.rot_x, self.rot_y, self.rot_z = rot_range
 
-    def forward(self, point_set):
-        # Only apply augmentation if training
-        if self.training and self.enabled:
-            point_shape = point_set.shape
-            start_dims = np.arange(len(point_shape) - 2).tolist()
-            point_set = point_set.permute(start_dims + [-1, -2])
-            if self.use_rotation:
-                rotation_matrix = self.placeholder_mesh.get_rotation_matrix_from_xyz((np.random.uniform(-self.rot_x, self.rot_x), np.random.uniform(-self.rot_y, self.rot_y), np.random.uniform(-self.rot_z, self.rot_z)))
-                rotation_matrix = torch.from_numpy(np.array(rotation_matrix)).float().to(point_set.device)
-                point_set[..., :] = point_set[..., :].matmul(rotation_matrix)
-            if self.use_position:
-                point_set += torch.normal(self.mean, self.std, size=point_set.shape).to(point_set.device)
-            point_set = point_set.permute(start_dims + [-1, -2])
-        return point_set
+#     def forward(self, point_set):
+#         # Only apply augmentation if training
+#         if self.training and self.enabled:
+#             point_shape = point_set.shape
+#             start_dims = np.arange(len(point_shape) - 2).tolist()
+#             point_set = point_set.permute(start_dims + [-1, -2])
+#             if self.use_rotation:
+#                 rotation_matrix = self.placeholder_mesh.get_rotation_matrix_from_xyz((np.random.uniform(-self.rot_x, self.rot_x), np.random.uniform(-self.rot_y, self.rot_y), np.random.uniform(-self.rot_z, self.rot_z)))
+#                 rotation_matrix = torch.from_numpy(np.array(rotation_matrix)).float().to(point_set.device)
+#                 point_set[..., :] = point_set[..., :].matmul(rotation_matrix)
+#             if self.use_position:
+#                 point_set += torch.normal(self.mean, self.std, size=point_set.shape).to(point_set.device)
+#             point_set = point_set.permute(start_dims + [-1, -2])
+#         return point_set
     

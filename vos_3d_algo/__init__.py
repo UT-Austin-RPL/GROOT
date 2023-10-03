@@ -8,7 +8,7 @@ from libero.libero.benchmark import get_benchmark, Benchmark, task_maps, registe
 
 FILE_PATH = os.path.dirname(__file__)
 GROOT_ROOT_PATH = os.path.join(FILE_PATH, "..")
-
+THIRD_PARTY_PATH = os.path.join(GROOT_ROOT_PATH, "third_party")
 
 class GroupedPcdModality(Modality):
     name = "grouped_pcd"
@@ -76,11 +76,12 @@ class NormalizedPcdModality(Modality):
     def _default_obs_processor(cls, obs):
         # We add a channel dimension and normalize them to be in range [-1, 1]
         start_dims = np.arange(len(obs.shape) - 3).tolist()
-        obs = normalize_kitchen3_point_cloud(obs)
+        obs = normalize_real_robot_point_cloud(obs)
         if isinstance(obs, np.ndarray):
             return obs.transpose(start_dims + [-3, -1, -2])
         else:
             return obs.permute(start_dims + [-3, -1, -2])
+        raise NotImplementedError
 
     @classmethod
     def _default_obs_unprocessor(cls, obs):
@@ -180,82 +181,16 @@ def custom_real_wrist_dept_process(obs):
     obs[obs > max_depth] = max_depth
     return process_frame(frame=obs, channel_dim=1, scale=max_depth)
 
-def toggle_data_modality_processing(real_robot=False):
-    if real_robot:
-        NormalizedPcdModality.set_obs_processor(normalize_real_robot_point_cloud_obs_processor)
-        WristDepthModality.set_obs_processor(custom_real_wrist_dept_process)
+def toggle_data_modality_processing(func, real_robot=False):
+    # if real_robot:
+    NormalizedPcdModality.set_obs_processor(func)
+    # WristDepthModality.set_obs_processor(custom_real_wrist_dept_process)
 
 #  ____                  _                          _        
 # | __ )  ___ _ __   ___| |__  _ __ ___   __ _ _ __| | _____ 
 # |  _ \ / _ \ '_ \ / __| '_ \| '_ ` _ \ / _` | '__| |/ / __|
 # | |_) |  __/ | | | (__| | | | | | | | | (_| | |  |   <\__ \
 # |____/ \___|_| |_|\___|_| |_|_| |_| |_|\__,_|_|  |_|\_\___/
-
-@register_benchmark
-class VOS_3D_Simulation_Benchmark(Benchmark):
-    def __init__(self, task_order_index=0):
-        super().__init__(task_order_index=task_order_index)
-        self.name = "VOS_3D_Simulation_Benchmark"
-        self.task_orders = [[0, 1, 2, 3, 4, 5, 6]]
-        self._make_benchmark()
-
-    def _make_benchmark(self):
-        tasks = list(task_maps["libero_10"].values())
-
-        self.dataset_name = [
-            "KITCHEN_SCENE3_put_the_moka_pot_on_the_stove_aug",
-            "KITCHEN_SCENE3_put_the_frying_pan_on_the_stove_aug",
-            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_to_the_front_of_the_white_mug_aug",
-        ]
-        tasks = [
-            task_maps["libero_90"]["KITCHEN_SCENE3_put_the_moka_pot_on_the_stove"],
-            task_maps["libero_90"]["KITCHEN_SCENE3_put_the_frying_pan_on_the_stove"],
-            task_maps["libero_90"]["KITCHEN_SCENE6_put_the_yellow_and_white_mug_to_the_front_of_the_white_mug"],
-        ]
-        print(f"[info] using task orders {self.task_orders[self.task_order_index]}")
-        self.tasks = [tasks[i] for i in self.task_orders[self.task_order_index]]
-        self.n_tasks = len(self.tasks)
-
-    def get_task_demonstration(self, i):
-        assert 0 <= i and i < self.n_tasks, \
-                f"[error] task number {i} is outer of range {self.n_tasks}"
-        # this path is relative to the datasets folder
-        demo_path = f"libero_datasets/{self.dataset_name[i]}_demo.hdf5"
-        return demo_path    
-    
-
-@register_benchmark
-class VOS_3D_Simulation_RGBD_Benchmark(Benchmark):
-    def __init__(self, task_order_index=0):
-        super().__init__(task_order_index=task_order_index)
-        self.name = "VOS_3D_Simulation_Benchmark"
-        self.task_orders = [[0, 1, 2, 3, 4, 5]]
-        self._make_benchmark()
-
-    def _make_benchmark(self):
-        tasks = list(task_maps["libero_10"].values())
-
-        self.dataset_name = [
-            "KITCHEN_SCENE3_put_the_moka_pot_on_the_stove",
-            "KITCHEN_SCENE3_put_the_frying_pan_on_the_stove",
-            "KITCHEN_SCENE6_put_the_yellow_and_white_mug_to_the_front_of_the_white_mug",
-        ]
-        tasks = [
-            task_maps["libero_90"]["KITCHEN_SCENE3_put_the_moka_pot_on_the_stove"],
-            task_maps["libero_90"]["KITCHEN_SCENE3_put_the_frying_pan_on_the_stove"],
-            task_maps["libero_90"]["KITCHEN_SCENE6_put_the_yellow_and_white_mug_to_the_front_of_the_white_mug"],
-        ]
-        print(f"[info] using task orders {self.task_orders[self.task_order_index]}")
-        self.tasks = [tasks[i] for i in self.task_orders[self.task_order_index]]
-        self.n_tasks = len(self.tasks)
-
-    def get_task_demonstration(self, i):
-        assert 0 <= i and i < self.n_tasks, \
-                f"[error] task number {i} is outer of range {self.n_tasks}"
-        # this path is relative to the datasets folder
-        demo_path = f"libero_datasets/{self.dataset_name[i]}_demo.hdf5"
-        return demo_path
-
 
 @register_benchmark
 class VOS_3D_Real_Robot_Benchmark(Benchmark):
@@ -272,7 +207,7 @@ class VOS_3D_Real_Robot_Benchmark(Benchmark):
             "pick_place_cup_aug",
             "stamp_paper_aug",
             "take_the_mug_aug",
-            "pick_place_mug_aug",
+            "pick_place_mug_demo_training",
             "roller_stamp_aug"
         ]
 
@@ -284,43 +219,41 @@ class VOS_3D_Real_Robot_Benchmark(Benchmark):
         assert 0 <= i and i < self.n_tasks, \
                 f"[error] task number {i} is outer of range {self.n_tasks}"
         # this path is relative to the datasets folder
-        demo_path = f"real_datasets/{self.dataset_name[i]}_demo.hdf5"
+        demo_path = f"{self.dataset_name[i]}.hdf5"
 
         return demo_path
     
 
 
-@register_benchmark
-class VOS_3D_Real_Robot_RGBD_Benchmark(Benchmark):
-    def __init__(self, task_order_index=0):
-        super().__init__(task_order_index=task_order_index)
-        self.name = "VOS_3D_Benchmark"
-        self.task_orders = [[0, 1, 2, 3, 4]]
-        self._make_benchmark()
+# @register_benchmark
+# class VOS_3D_Simulation_Benchmark(Benchmark):
+#     def __init__(self, task_order_index=0):
+#         super().__init__(task_order_index=task_order_index)
+#         self.name = "VOS_3D_Simulation_Benchmark"
+#         self.task_orders = [[0, 1, 2, 3, 4, 5, 6]]
+#         self._make_benchmark()
 
-    def _make_benchmark(self):
-        tasks = list(task_maps["libero_10"].values())
+#     def _make_benchmark(self):
+#         tasks = list(task_maps["libero_10"].values())
 
-        # Remap the task ids in the original codebase to reduce the id by 3
-        self.dataset_name = [
-            "pick_place_cup",
-            "stamp_paper",
-            "take_the_mug",
-            "pick_place_mug",
-            "roller_stamp"
-        ]
+#         self.dataset_name = [
+#             "KITCHEN_SCENE3_put_the_moka_pot_on_the_stove_aug",
+#             "KITCHEN_SCENE3_put_the_frying_pan_on_the_stove_aug",
+#             "KITCHEN_SCENE6_put_the_yellow_and_white_mug_to_the_front_of_the_white_mug_aug",
+#         ]
+#         tasks = [
+#             task_maps["libero_90"]["KITCHEN_SCENE3_put_the_moka_pot_on_the_stove"],
+#             task_maps["libero_90"]["KITCHEN_SCENE3_put_the_frying_pan_on_the_stove"],
+#             task_maps["libero_90"]["KITCHEN_SCENE6_put_the_yellow_and_white_mug_to_the_front_of_the_white_mug"],
+#         ]
+#         print(f"[info] using task orders {self.task_orders[self.task_order_index]}")
+#         self.tasks = [tasks[i] for i in self.task_orders[self.task_order_index]]
+#         self.n_tasks = len(self.tasks)
 
-        print(f"[info] using task orders {self.task_orders[self.task_order_index]}")
-        # self.tasks = [tasks[i] for i in self.task_orders[self.task_order_index]]
-        self.n_tasks = len(self.dataset_name)
-
-    def get_task_demonstration(self, i):
-        assert 0 <= i and i < self.n_tasks, \
-                f"[error] task number {i} is outer of range {self.n_tasks}"
-        # this path is relative to the datasets folder
-        demo_path = f"real_datasets/{self.dataset_name[i]}_demo.hdf5"
-
-        return demo_path
-    
-
+#     def get_task_demonstration(self, i):
+#         assert 0 <= i and i < self.n_tasks, \
+#                 f"[error] task number {i} is outer of range {self.n_tasks}"
+#         # this path is relative to the datasets folder
+#         demo_path = f"libero_datasets/{self.dataset_name[i]}_demo.hdf5"
+#         return demo_path    
 

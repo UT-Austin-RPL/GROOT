@@ -1,4 +1,4 @@
-# **Learning Generalizable Manipulation Policies with Object-Centric 3D Representations** 
+# **GROOT: Learning Generalizable Manipulation Policies with Object-Centric 3D Representations** 
 
 
 <!-- 
@@ -17,8 +17,13 @@ Our real robot experiments are based off of the codebase [Deoxys](https://github
 
 # Getting Started
 
-## Prerequisite
+## Installation
 
+```shell
+    pip install -r requirements.txt
+```
+
+### Prerequisite
 1. XMem installation
 
 
@@ -28,13 +33,49 @@ Our real robot experiments are based off of the codebase [Deoxys](https://github
 1. SAM installation
 
 
-## Installation
+## Collect Data 
 
-```shell
-    pip install -r requirements.txt
+### 
+
+
+
+
+## Code Structures
+
+For details, please refer to `code_structure.md`
 ```
+groot/
+
+    # Detailed jupyter notebook to go through important components of the repo, including:
+    #    - XMem tracking for robot data
+    #    - Backprojection to point clouds
+    #    - SAM result on robot data
+    #    - DINOv2 result on robot data
+    module_examples.ipynb
+
+    # Scripts that include:
+    #    - Scribble to mask annotation
+    #    - process dataset for faster training
+    #    - Train robot policies
+    #    - Evaluate robot policies
+    scripts/
+       
+    # Groot algo repo that stores most of the policy components
+    groot_algo/
+        
+    # separate model for Segmentation Corresponde Model (Paper Section 3.4)
+    segmentation_correspondence_model/ # segmentation correspondence model
+
+    # Necessary scripts for real robot control
+    real_robot_scripts/
 
 
+    # third party models (Large vision models)
+    ## Configuration
+    vision_model_configs/
+    ## Third party code repo
+    third_party/
+```
 
 # Get the datasets for training policies
 

@@ -111,8 +111,6 @@ def main(hydra_cfg):
                 for key in ["joint_states", "gripper_states", "ee_states", "agentview_extrinsics"]:
                     original_dataset.copy(f"data/{source_demo}/obs/{key}", training_dataset[f"data/{demo}/obs"], name=key)
 
-                
-
                 original_dataset.copy(f"data/{source_demo}/actions", training_dataset[f"data/{demo}"], name="actions")
 
         edit_h5py_datasets(training_set_name, pcd_grouped_dataset_name, mode="merge")
