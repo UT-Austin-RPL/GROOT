@@ -8,7 +8,7 @@ import argparse
 import numpy as np
 from pathlib import Path
 
-from rpl_vision_utils.networking.camera_redis_interface import \
+from deoxys_vision.networking.camera_redis_interface import \
     CameraRedisSubInterface
 
 from deoxys import config_root
@@ -18,7 +18,7 @@ from deoxys.utils.input_utils import input2action
 from deoxys.utils.io_devices import SpaceMouse
 from deoxys.utils.log_utils import get_deoxys_example_logger
 
-from rpl_vision_utils.utils.calibration_utils import load_default_extrinsics, load_default_intrinsics
+from deoxys_vision.utils.calibration_utils import load_default_extrinsics, load_default_intrinsics
 
 from kaede_utils.networking_utils.redis_utils import RedisInteractiveInterface
 
@@ -230,27 +230,27 @@ def parse_args():
     )
     return parser.parse_args()
     
-def main():
+# def main():
 
-    args = parse_args()
-    interface = RedisInteractiveInterface(
-        identifier="data_collection", 
-        redis_host="172.16.0.1",
-        operation_mode_options=["reset", "collect", "stop", "eval"],
-        )
+#     args = parse_args()
+#     interface = RedisInteractiveInterface(
+#         identifier="data_collection", 
+#         redis_host="172.16.0.1",
+#         operation_mode_options=["reset", "collect", "stop", "eval"],
+#         )
     
-    observation_cfg = YamlConfig("real_robot_observation_cfg_example.yml").as_easydict()
-    observation_cfg.camera_ids = [0]
-    data_collection = DeoxysDataCollection(
-        observation_cfg,
-        folder=args.dataset_name)
+#     observation_cfg = YamlConfig("real_robot_observation_cfg_example.yml").as_easydict()
+#     observation_cfg.camera_ids = [0]
+#     data_collection = DeoxysDataCollection(
+#         observation_cfg,
+#         folder=args.dataset_name)
 
-    data_collection.collect_data()
-    response_data = interface.send_request_and_wait_for_response(request_data={"ask_for_save": True}, target="ui")
+#     data_collection.collect_data()
+#     response_data = interface.send_request_and_wait_for_response(request_data={"ask_for_save": True}, target="ui")
 
-    data_collection.save(keep=response_data["data"]["save"])
+#     data_collection.save(keep=response_data["data"]["save"])
 
-def local_test():
+def main():
     args = parse_args()    
 
     assert(args.dataset_name is not None)
@@ -273,5 +273,5 @@ def local_test():
    
     
 if __name__ == "__main__":
-    # main()
-    local_test()
+    main()
+    # local_test()

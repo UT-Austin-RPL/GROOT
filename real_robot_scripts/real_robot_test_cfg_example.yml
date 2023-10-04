@@ -1,0 +1,33 @@
+# camera_ids: [0, 2]
+
+camera_refs: ["rs_0"]
+camera_types:
+  "camera_rs_0": "rs"
+  "camera_rs_1": "rs"
+   
+img_h: 224
+img_w: 224
+
+camera_name_conversion:
+  "camera_0": "agentview"
+  "camera_1": "agentview"
+  "camera_2": "eye_in_hand"
+
+obs_key_mapping:
+  # camera_0 and camera_1 are workspace cameras
+  camera_0_color: agentview_rgb
+  camera_0_depth: agentview_depth
+  camera_1_color: agnetview_rgb
+  camera_1_depth: agentview_depth
+
+  # camera_2 is the eye-in-hand camera
+  camera_2_color: eye_in_hand_rgb
+  camera_2_depth: eye_in_hand_depth
+  gripper_states: gripper_states
+  joint_states: joint-states
+  ee_states: ee_states
+  xyz: xyz
+  # This is point cloud rgb, not images
+  rgb: rgb
+  neighborhood_10_64: neighborhood_10_64
+  centers_10_64: centers_10_64
