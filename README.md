@@ -15,8 +15,6 @@
 
 Our real robot experiments are based off of the codebase [Deoxys](https://github.com/UT-Austin-RPL/deoxys_control)
 
-# Getting Started
-
 ## Installation
 
 ```shell
@@ -24,19 +22,57 @@ Our real robot experiments are based off of the codebase [Deoxys](https://github
 ```
 
 ### Prerequisite
-1. XMem installation
 
+We need to install the vision models and checkpoints in order to run GROOT codebase. Here is a simple bash script that takes care of everything and also make sure that you can download the same commits of the repos as I used for my experiments. 
 
-1. DINOv2 installation
+```
+    ./setup_vision_models.sh
+```
 
+The resulting repo structure under `third_party` should be as follows:
+```
+third_party/
+    dinov2
+    segment-anything
+    XMem
+    sam_checkpoints
+    xmeme_checkpoints
+```
 
-1. SAM installation
+## Data Collection
 
+This repo relies on `deoxys_vision` and `deoxys_control` to collect images and control the robot (Franka Emika Panda). 
 
-## Collect Data 
+## Curate Training Datasets
 
-### 
+To curate the training datasets, there are three things to be done:
+1. create demonstrations
+2. annotate single-frame
+3. create point clouds to train policies fast
 
+### Create Demonstration Dataset
+
+```
+    python real_robot_scripts/create_dataset_example.py --folder DEMONSTRATION_FOLDER
+```
+
+### Annotate Single-Frame Segmentation
+
+```
+    python scripts/interactive_demo_from_datasets.py --dataset DATASET_PATH --num_objects NUM_OBJECTS
+```
+
+By default, we assume you also annotate robotos during this process. This is for better performance of VOS without considering the robot as one of the objects, and also the GROOT policies assume that the input is including the robot point clouds, so the policy will exclude the robot's point clouds. Including this information is also beneficial for conducting ablation studies for your need.
+
+### Prepare Training set
+
+Simply run `python prepare_training_set.py dataset_path=DATASET_PATH` will do the work. The command is equivalent to the following one:
+
+```
+    python prepare_training_set.py dataset_path=DATASET_PATH vos_annotation=true object_pcd=true pcd_aug=true pcd_grouping=true delete_intermediate_files=true
+```
+
+If the the script is terminated in the middle and you do not want to create the whole set of intermediate files, you can specify one of the procedure from `true` to `false` and the script will skip the corresponding operation.
 
 
 
