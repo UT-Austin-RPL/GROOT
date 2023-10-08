@@ -3,22 +3,23 @@
 defaults:
   - _self_
   - data: default
-  - policy: vos_3d_transformer_policy
+  - datasets: default
+  - policy: groot_real_robot_no_wrist_transformer_policy
   - train: default
   - eval: default
   - lifelong: vos_3d_single_task
-  - reproduce_experiment: null
+  # - reproduce_experiment: null
   - experiments: null
-  - aug_experiments: null
-  - normalized_experiments: null
-  - masked_experiments: null
-  - robot_masked_experiments: null
-  - ablation_dataset_aug_experiments: null
-  - ablation_grouping_experiments: null
-  - simulation_experiments: null
-  - real_robot_experiments: null
-  - viola_experiments: null
-  - mae_experiments: null
+  # - aug_experiments: null
+  # - normalized_experiments: null
+  # - masked_experiments: null
+  # - robot_masked_experiments: null
+  # - ablation_dataset_aug_experiments: null
+  # - ablation_grouping_experiments: null
+  # - simulation_experiments: null
+  # - real_robot_experiments: null
+  # - viola_experiments: null
+  # - mae_experiments: null
   - test: null
 
 seed: 10000
@@ -35,3 +36,13 @@ pretrain: false
 pretrain_model_path: ""
 benchmark_name: "VOS_3D_Benchmark"
 task_id: 0
+
+
+dataset_path: null
+save_video: true
+
+vos_annotation: true
+object_pcd: true
+pcd_aug: true
+pcd_grouping: true
+delete_intermediate_files: true

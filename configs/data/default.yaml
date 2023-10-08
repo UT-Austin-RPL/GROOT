@@ -25,7 +25,7 @@ obs:
         rgb: [] # ["agentview_rgb", "eye_in_hand_rgb"]
         depth: []
         low_dim: ["gripper_states", "joint_states"]
-        pcd: ["xyz", "rgb"]
+        pcd: ["xyz"]
         wrist_depth: []
 
 # mapping from obs.modality keys to robosuite environment observation keys
