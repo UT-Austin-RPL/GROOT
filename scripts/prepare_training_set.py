@@ -31,9 +31,9 @@ def main(hydra_cfg):
     cfg = EasyDict(yaml.safe_load(yaml_config))
     print(cfg)
     device = "cuda:0"
-    assert(cfg.dataset_name is not None), "Please specify the dataset name"
+    assert(cfg.dataset_path is not None), "Please specify the dataset name"
 
-    original_dataset_name = cfg.dataset_name
+    original_dataset_name = cfg.dataset_path
 
     with Timer(verbose=True) as timer:
         annotation_folder = get_annotation_path(original_dataset_name)

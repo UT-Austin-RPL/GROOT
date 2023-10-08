@@ -17,9 +17,7 @@ import torch
 import h5py
 
 import init_path
-from vos_3d_algo import GROOT_ROOT_PATH
-from vos_3d_algo.o3d_modules import convert_convention
-from vos_3d_algo.misc_utils import get_annotation_path
+from vos_3d_algo.o3d_modules import O3DPointCloud, convert_convention
 from model.network import XMem
 from inference.interact.s2m_controller import S2MController
 from inference.interact.fbrs_controller import FBRSController
@@ -61,20 +59,15 @@ def launch_gui(args):
 
         app = QApplication(sys.argv)
         ex = App(network, resource_manager, s2m_controller, fbrs_controller, config)
-
-        # This is to set scribble to be default
-        ex.curr_interaction = 'Scribble'
-        ex.radio_fbrs.toggle() # toggle off the click mode
-        ex.radio_s2m.toggle()  # togle on the scribble mode
-
+        # sys.exit(app.exec_())    
         app.exec_()
 
 def main():
     # Arguments parsing
     parser = ArgumentParser()
-    parser.add_argument('--model', default=os.path.join(GROOT_ROOT_PATH, 'third_party/xmem_checkpoints/XMem.pth'))
-    parser.add_argument('--s2m_model', default=os.path.join(GROOT_ROOT_PATH, 'third_party/xmem_checkpoints/s2m.pth'))
-    parser.add_argument('--fbrs_model', default=os.path.join(GROOT_ROOT_PATH, 'third_party/xmem_checkpoints/fbrs.pth'))
+    parser.add_argument('--model', default='./third_party/xmem_checkpoints/XMem.pth')
+    parser.add_argument('--s2m_model', default='./third_party/xmem_checkpoints/s2m.pth')
+    parser.add_argument('--fbrs_model', default='./third_party/xmem_checkpoints/fbrs.pth')
 
     """
     Priority 1: If a "images" folder exists in the workspace, we will read from that directory
@@ -85,15 +78,13 @@ def main():
     That way, you can continue annotation from an interrupted run as long as the same workspace is used.
     """
     # Load from a demonstration dataset
-    parser.add_argument('--dataset-path', help='Name of the dataset to load from. See scripts/datasets.py for details.', required=True)
-
     parser.add_argument('--images', help='Folders containing input images.', default=None)
-    parser.add_argument('--video', help='Video file readable by OpenCV.', default=None)
+    parser.add_argument('--video', help='Video file readable by OpenCV.', required=True)
     parser.add_argument('--workspace', help='directory for storing buffered images (if needed) and output masks', default=None)
 
     parser.add_argument('--buffer_size', help='Correlate with CPU memory consumption', type=int, default=100)
     
-    parser.add_argument('--num_objects', type=int, required=True)
+    parser.add_argument('--num_objects', type=int, default=1)
 
     # Long-memory options
     # Defaults. Some can be changed in the GUI.
@@ -113,30 +104,25 @@ def main():
     parser.add_argument('--real', action='store_true')
     args = parser.parse_args()
 
+    annotation_folder = "example_results/video_annotations"
     tmp_folder = "tmp_images"
-    demo_idx = 0
-    img_idx = 0
-    
-    with h5py.File(args.dataset_path, 'r') as f:
-        first_frame = convert_convention(f[f"data/demo_{demo_idx}/obs/agentview_rgb"][()][img_idx])[..., ::-1]
-        if "real" in f["data"].attrs:
-            args.real = f["data"].attrs["real"]
-    # annotation_path = # os.path.join(annotation_folder, dataset_folder_name)
-    annotation_path = get_annotation_path(args.dataset_path)
+
+    annotation_path = os.path.join(annotation_folder, args.video.split("/")[-1].split(".")[0])
     tmp_path = tmp_folder
     os.makedirs(annotation_path, exist_ok=True)
     os.makedirs(tmp_path, exist_ok=True)
 
     os.makedirs(os.path.join(tmp_path, "images"), exist_ok=True)
+    _, first_frame = cv2.VideoCapture(args.video).read()
     first_frame = cv2.resize(first_frame, (args.size, args.size), interpolation=cv2.INTER_AREA)
-    # if args.real:
-    #     first_frame = cv2.cvtColor(cv2.flip(first_frame, 0), cv2.COLOR_BGR2RGB)
+    if args.real:
+        first_frame = cv2.cvtColor(cv2.flip(first_frame, 0), cv2.COLOR_BGR2RGB)
     cv2.imwrite(os.path.join(os.path.join(tmp_path, "images", "frame.jpg")), first_frame)
-    print(tmp_path)
+
     args.images = tmp_path
     args.workspace = tmp_path
 
-    print(args.images, tmp_folder, args.real)
+    print(args.images, tmp_folder)
 
     launch_gui(args)
 

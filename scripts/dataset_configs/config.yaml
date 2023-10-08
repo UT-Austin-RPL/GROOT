@@ -3,7 +3,7 @@
 defaults:
   - _self_
 
-dataset_name: null
+dataset_path: null
 save_video: true
 
 vos_annotation: true
