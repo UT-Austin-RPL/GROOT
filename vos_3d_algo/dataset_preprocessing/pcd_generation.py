@@ -16,6 +16,20 @@ from vos_3d_algo.o3d_modules import convert_convention, O3DPointCloud
 from vos_3d_algo.misc_utils import resize_image_to_same_shape, get_first_frame_annotation, normalize_pcd, rotate_camera_pose, get_transformed_depth_img, depth_to_rgb, VideoWriter, Timer
 from vos_3d_algo.point_mae_modules import Group
 
+def scene_pcd_fn(
+        cfg,
+        rgb_img_input,
+        depth_img_input,
+        intrinsic_matrix,
+        extrinsic_matrix,
+        is_real_robot=True,
+    ):
+        rgbd_pc = O3DPointCloud()
+        rgbd_pc.create_from_rgbd(rgb_img_input, depth_img_input, intrinsic_matrix)
+        rgbd_pc.transform(extrinsic_matrix)
+
+        return rgbd_pc.get_points(), rgbd_pc.get_colors()
+    
 
 def object_pcd_fn(
         cfg,

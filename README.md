@@ -89,7 +89,7 @@ By default, we assume you also annotate robotos during this process. This is for
 Simply run `python prepare_training_set.py dataset_path=DATASET_PATH` will do the work. The command is equivalent to the following one:
 
 ```
-    python prepare_training_set.py dataset_path=DATASET_PATH vos_annotation=true object_pcd=true pcd_aug=true pcd_grouping=true delete_intermediate_files=true
+python prepare_training_set.py dataset_path=DATASET_PATH vos_annotation=true object_pcd=true pcd_aug=true pcd_grouping=true delete_intermediate_files=true
 ```
 
 If the the script is terminated in the middle and you do not want to create the whole set of intermediate files, you can specify one of the procedure from `true` to `false` and the script will skip the corresponding operation. After this process, you will get a `masks.hdf5` that stores the result from segmentation propagation, and a `*_training_set.hdf5` file that saves all the inputs that are used during training.
