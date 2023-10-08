@@ -72,6 +72,7 @@ def object_pcd_fn(
         kernel = np.ones((erod_boundary_kernel_size, erod_boundary_kernel_size),np.uint8)
 
     xyz_list = []
+
     for mask_idx in range(1, first_frame_annotation.max() + 1):
         masked_depth_img = depth_img.copy()
         binary_mask = np.where(mask_img == mask_idx, 1, 0)

@@ -212,7 +212,7 @@ class VOS_3D_Real_Robot_Benchmark(Benchmark):
         ]
 
         print(f"[info] using task orders {self.task_orders[self.task_order_index]}")
-        # self.tasks = [tasks[i] for i in self.task_orders[self.task_order_index]]
+        self.tasks = [tasks[i] for i in self.task_orders[self.task_order_index]]
         self.n_tasks = len(self.dataset_name)
 
     def get_task_demonstration(self, i):

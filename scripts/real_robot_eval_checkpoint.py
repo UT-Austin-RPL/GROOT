@@ -1,3 +1,4 @@
+from ctypes import resize
 import h5py
 import cv2
 import os
@@ -32,14 +33,14 @@ from kaede_utils.visualization_utils.video_utils import KaedeVideoWriter
 import init_path
 from vos_3d_algo import toggle_data_modality_processing, GROOT_ROOT_PATH
 from vos_3d_algo.xmem_tracker import XMemTracker
-from vos_3d_algo.misc_utils import get_annotation_path, get_first_frame_annotation, get_first_frame_annotation_from_dataset, overlay_xmem_mask_on_image, mask_to_rgb, resize_image_to_same_shape, normalize_pcd
-from vos_3d_algo.o3d_modules import O3DPointCloud
+from vos_3d_algo.misc_utils import add_palette_on_mask, get_annotation_path, get_first_frame_annotation, get_first_frame_annotation_from_dataset, overlay_xmem_mask_on_image, mask_to_rgb, resize_image_to_same_shape, normalize_pcd, get_palette
+from vos_3d_algo.o3d_modules import O3DPointCloud, convert_convention
 from vos_3d_algo.eval_utils import raw_real_obs_to_tensor_obs
-from vos_3d_algo.dataset_preprocessing import object_pcd_fn
+from vos_3d_algo.dataset_preprocessing.pcd_generation import object_pcd_fn
 
 from vos_3d_algo.vos_3d_transformer import VOS3DSingleTask
 from robomimic.utils.obs_utils import Modality
-from vos_3d_algo import PcdModality, NormalizedPcdModality, VOS_3D_Benchmark, WristDepthModality, GroupedPcdModality, VOS_3D_Ablation_Augmentation_Benchmark, VOS_3D_Ablation_Grouping_Benchmark, normalize_real_robot_point_cloud
+from vos_3d_algo import PcdModality, NormalizedPcdModality,WristDepthModality, GroupedPcdModality, normalize_real_robot_point_cloud, VOS_3D_Real_Robot_Benchmark
 
 from vos_3d_algo.sam_operator import SAMOperator
 from vos_3d_algo.dino_features import DinoV2ImageProcessor
@@ -91,8 +92,6 @@ def main():
         args.new_instance_idx = -1
     
     assert(args.experiment_name in experiment_options), f"Please specify from {experiment_options}"
-
-    assert(args.experiment_name in experiment_options[2:]), f"Testing needs"
 
     obs_cfg = YamlConfig("real_robot_scripts/real_robot_observation_cfg_example.yml").as_easydict()
 
@@ -180,9 +179,9 @@ def main():
     if is_new_instance:
         new_instance_annotation_folder = get_annotation_path(dataset_name)
         new_instance_annotation_folder = os.path.join(new_instance_annotation_folder, f"evaluation_{args.new_instance_idx}")
-
-        if os.path.exists(os.path.join(new_instance_annotation_folder, "frame.jpg")):
-            first_frame, _ = get_first_frame_annotation(new_instance_annotation_folder)
+        os.makedirs(new_instance_annotation_folder, exist_ok=True)
+        if os.path.exists(os.path.join(new_instance_annotation_folder, "frame.jpg")) and os.path.exists(os.path.join(new_instance_annotation_folder, "frame_annotation.png")):
+            first_frame, first_frame_annotation = get_first_frame_annotation(new_instance_annotation_folder)
             cv2.imshow("", first_frame)
             cv2.waitKey(0)
             print(colored("Skipping since this instance is already annotated", "yellow"))
@@ -192,13 +191,28 @@ def main():
             sam_operator.init()
             scm_module = SegmentationCorrespondenceModel(dinov2=dinov2, sam_operator=sam_operator)
 
-            new_first_frame = obs_processor.get_real_robot_img_obs()["agentview_rgb"]
+            xmem_input_size = first_frame.shape[:2]
+            new_first_frame = convert_convention(obs_processor.get_real_robot_img_obs()["agentview_rgb"])
+            first_frame = resize_image_to_same_shape(first_frame, new_first_frame)
+            first_frame_annotation = resize_image_to_same_shape(first_frame_annotation, first_frame)
+
+            print(first_frame.shape, first_frame_annotation.shape, new_first_frame.shape)
             new_first_frame_annotation = scm_module(new_first_frame, first_frame, first_frame_annotation)
             new_first_frame_annotation = resize_image_to_same_shape(new_first_frame_annotation, new_first_frame)
 
+            new_first_frame_annotation[first_frame_annotation == first_frame_annotation.max()] = first_frame_annotation.max()
+
+            new_first_frame = resize_image_to_same_shape(new_first_frame, reference_size=xmem_input_size)
+            new_first_frame_annotation = resize_image_to_same_shape(np.array(new_first_frame_annotation), reference_size=xmem_input_size)
+
+            new_first_frame_annotation = Image.fromarray(new_first_frame_annotation)
+            new_first_frame_annotation.putpalette(get_palette(palette="davis"))
             # Write the frame of new instancs into the file.
             cv2.imwrite(os.path.join(new_instance_annotation_folder, "frame.jpg"), new_first_frame)
-            Image.fromarray(new_first_frame_annotation).save(os.path.join(new_instance_annotation_folder, "frame_annotation.png"))
+            new_first_frame_annotation.save(os.path.join(new_instance_annotation_folder, "frame_annotation.png"))
+
+            first_frame = new_first_frame
+            first_frame_annotation = np.array(new_first_frame_annotation)
 
     # This is a placeholder as LIBERO codebase requires it.
     task_embs = torch.ones((1, 1))
@@ -223,7 +237,7 @@ def main():
     # /_/\_\_|  |_|\___|_| |_| |_|
 
 
-    xmem_tracker = XMemTracker(xmem_checkpoint=os.path.join(GROOT_ROOT_PATH, 'xmem_checkpoints/XMem.pth'), 
+    xmem_tracker = XMemTracker(xmem_checkpoint=os.path.join(GROOT_ROOT_PATH, 'third_party/xmem_checkpoints/XMem.pth'), 
                                device='cuda:0')
     xmem_tracker.clear_memory()
 
@@ -266,7 +280,6 @@ def main():
     # The following should be always here
 
     algo.reset()
-
 
     xmem_tracker.track(first_frame, first_frame_annotation)
     print(first_frame.shape, first_frame_annotation.shape)
@@ -335,14 +348,14 @@ def main():
 
             # 5. Get the point cloud from RGB-D observations
             xyz_array = object_pcd_fn(
-                exp_cfg,
-                rgb_img_input=curr_img,
+                obs_cfg,
+                rgb_img_input=obs["agentview_rgb"],
                 depth_img_input=obs["agentview_depth"],
-                mask_input=mask,
+                mask_img_input=mask,
                 intrinsic_matrix=intrinsic_matrix,
                 extrinsic_matrix=extrinsic_matrix,
                 first_frame_annotation=first_frame_annotation,
-                erode_boundary=exp_cfg.datasets.erode,
+                erode_boundary=obs_cfg.datasets.erode,
                 is_real_robot=True,
                 prev_xyz=prev_points[-1] if len(prev_points) > 0 else None,
             )
