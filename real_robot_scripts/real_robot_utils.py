@@ -23,8 +23,8 @@ class RealRobotObsProcessor():
         self.cr_interfaces = {}
         self.camera_info_dict = {}
 
-        assert_camera_ref_convention(cfg.camera_refs)
         for camera_ref in cfg.camera_refs:
+            assert_camera_ref_convention(camera_ref)
             camera_info = get_camera_info(camera_ref)
             cr_interface = CameraRedisSubInterface(camera_info, use_depth=True)
             cr_interface.start()
@@ -65,7 +65,7 @@ class RealRobotObsProcessor():
 
         if intrinsics is None:
             for camera_name in self.camera_names:
-                intrinsic_matrix = load_default_intrinsics(camera_id, self.type_fn(camera_name), image_type="color", fmt="matrix")
+                intrinsic_matrix = load_default_intrinsics(self.id_fn(camera_name), self.type_fn(camera_name), image_type="color", fmt="matrix")
                 self.original_intrinsic_matrix[self.name_conversion_fn(camera_name)] = intrinsic_matrix
         else:
             for camera_name in self.camera_names:                
@@ -77,14 +77,14 @@ class RealRobotObsProcessor():
                 camera_id = self.id_fn(camera_name)
                 intrinsic_matrix = self.img_processor.resize_intrinsics(
                                         original_image_size=self.original_image_size_dict[camera_type][camera_id],
-                                        intrinsic_matrix=np.array(self.original_intrinsic_matrix[self.name_conversion_fn(camera_id)]),
+                                        intrinsic_matrix=np.array(self.original_intrinsic_matrix[self.name_conversion_fn(camera_name)]),
                                         camera_type=camera_type,
                                         img_w=self.cfg.img_w,
                                         img_h=self.cfg.img_h,
                                         fx=self.fx_fy_dict[camera_type][camera_id]["fx"],
                                         fy=self.fx_fy_dict[camera_type][camera_id]["fy"],            
                     )
-                self.intrinsic_matrix[self.name_conversion_fn(camera_id)] = intrinsic_matrix
+                self.intrinsic_matrix[self.name_conversion_fn(camera_name)] = intrinsic_matrix
         else:
             self.intrinsic_matrix = self.original_intrinsic_matrix
 
@@ -98,13 +98,13 @@ class RealRobotObsProcessor():
                 self.extrinsic_matrix[self.name_conversion_fn(camera_name)] = extrinsics[self.name_conversion_fn(camera_name)]
 
     def get_extrinsic_matrix(self, key):
-        if type(key) is int:
+        if key in self.cfg.camera_name_conversion.keys():
             return self.extrinsic_matrix[self.name_conversion_fn(key)]
         else:
             return self.extrinsic_matrix[key]
     
     def get_intrinsic_matrix(self, key):
-        if type(key) is int:
+        if key in self.cfg.camera_name_conversion.keys():
             return self.intrinsic_matrix[self.name_conversion_fn(key)]
         else:
             return self.intrinsic_matrix[key]

@@ -22,11 +22,13 @@ def scene_pcd_fn(
         depth_img_input,
         intrinsic_matrix,
         extrinsic_matrix,
+        max_points=10000,
         is_real_robot=True,
     ):
-        rgbd_pc = O3DPointCloud()
+        rgbd_pc = O3DPointCloud(max_points=max_points)
         rgbd_pc.create_from_rgbd(rgb_img_input, depth_img_input, intrinsic_matrix)
         rgbd_pc.transform(extrinsic_matrix)
+        rgbd_pc.preprocess()
 
         return rgbd_pc.get_points(), rgbd_pc.get_colors()
     

@@ -16,6 +16,7 @@ from deoxys_vision.networking.camera_redis_interface import \
 from deoxys_vision.utils.calibration_utils import load_default_extrinsics, load_default_intrinsics
 from deoxys_vision.utils.camera_utils import assert_camera_ref_convention, get_camera_info
 
+import init_path
 from vos_3d_algo.dataset_preprocessing.pcd_generation import scene_pcd_fn
 
 from real_robot_scripts.groot_img_utils import ImageProcessor
@@ -56,6 +57,8 @@ def main():
         
     obs_processor = RealRobotObsProcessor(observation_cfg,
                                           processor_name="ImageProcessor")
+    obs_processor.load_intrinsic_matrix(resize=False)
+    obs_processor.load_extrinsic_matrix()
     extrinsic_matrix = obs_processor.get_extrinsic_matrix("agentview")
     intrinsic_matrix = obs_processor.get_intrinsic_matrix("agentview")
 

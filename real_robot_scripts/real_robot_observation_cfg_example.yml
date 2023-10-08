@@ -11,6 +11,8 @@ img_w: 224
 camera_name_conversion:
   "camera_rs_0": "agentview"
   "camera_rs_1": "agentview"
+  "camera_k4a_0": "agentview"
+  "camera_k4a_1": "agentview"
 
 obs_key_mapping:
   # camera_0 and camera_1 are workspace cameras
