@@ -15,13 +15,13 @@
 
 Our real robot experiments are based off of the control codebase [Deoxys](https://github.com/UT-Austin-RPL/deoxys_control) and its vision pipeline [Deoxys-Vision](https://github.com/UT-Austin-RPL/deoxys_vision).
 
-## Installation
+## 1. Installation
 
 ```shell
 pip install -r requirements.txt
 ```
 
-### Prerequisite
+### 2. Prerequisite
 
 We need to install the vision models and checkpoints in order to run GROOT codebase. Here is a simple bash script that takes care of everything and also make sure that you can download the same commits of the repos as I used for my experiments. 
 
@@ -39,11 +39,11 @@ third_party/
     xmeme_checkpoints
 ```
 
-## Data Collection
+## 3. Data Collection
 
 This repo relies on `deoxys_vision` and `deoxys_control` to collect images and control the robot (Franka Emika Panda). 
 
-### Reset robot states
+### 3.1 Reset robot states
 
 You will first need to reset the robot to an initial joint configuration. This is to allow you collect data from a fixed iniital state distribution. 
 
@@ -51,7 +51,7 @@ You will first need to reset the robot to an initial joint configuration. This i
 python real_robot_scripts/deoxys_reset_joints.py
 ```
 
-### Collect data with spacemouse
+### 3.2 Collect data with spacemouse
 
 Collect demonstrations for a task. Specify the task name and consistently so that the code can successfully create the datasets later.
 
@@ -60,20 +60,20 @@ python real_robot_scripts/deoxys_data_collection.py --dataset-name DATASET_NAME
 ```
 
 
-## Curate Training Datasets
+## 4. Curate Training Datasets
 
 To curate the training datasets, there are three things to be done:
 1. create demonstrations
 2. annotate single-frame segmentation
 3. create point clouds to train policies fast
 
-### Create Demonstration Dataset
+### 4.1 Create Demonstration Dataset
 
 ```
 python real_robot_scripts/create_dataset.py --folder DEMONSTRATION_FOLDER
 ```
 
-### Annotate Single-Frame Segmentation
+### 4.2 Annotate Single-Frame Segmentation
 
 ```
 python scripts/interactive_demo_from_datasets.py --dataset_path DATASET_PATH --num_objects NUM_OBJECTS
@@ -84,7 +84,7 @@ By default, we assume you also annotate robotos during this process. This is for
 
 [Replace this line with an actual s2m video example]()
 
-### Prepare Training set
+### 4.3 Prepare Training set
 
 Simply run `python prepare_training_set.py dataset_path=DATASET_PATH` will do the work. The command is equivalent to the following one:
 
@@ -95,16 +95,16 @@ python prepare_training_set.py dataset_path=DATASET_PATH vos_annotation=true obj
 If the the script is terminated in the middle and you do not want to create the whole set of intermediate files, you can specify one of the procedure from `true` to `false` and the script will skip the corresponding operation. After this process, you will get a `masks.hdf5` that stores the result from segmentation propagation, and a `*_training_set.hdf5` file that saves all the inputs that are used during training.
 
 
-## Real Robot Evaluation
+## 5. Real Robot Evaluation
 
 
-### Check if your cameras are properly configured and setup.
+### 5.1 Check if your cameras are properly configured and setup.
 
 ```
 python verify_camera_observations.py
 ```
 
-### Evaluation Procedural
+### 5.2 Evaluation Procedural
 
 1. Reset to initial positions
 
@@ -142,7 +142,7 @@ to specify the yaml file in the argument `--experiment-config`.
 
 If it's for testing new instances, you need to make sure that you specify the same experiment config for a single object. Otherwise the annotation used for propagating the VOS model will not match.
 
-## Code Structures
+## 6. Code Structures
 
 For details, please refer to `code_structure.md`
 ```
