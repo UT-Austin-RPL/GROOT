@@ -1,7 +1,8 @@
 <div class="publication-authors">
     {% for author in site.data.authors.author_list %}
       <span class="author-block">
-        <a href="{{author.url}}"> {{author.name}}<sup>{{author.affliation}} </sup>
+        <a href="{{author.url}}"> {{author.name}}<sup>{{author.affliation}}</sup>&nbsp&nbsp
+        </a>
         </span>
     {% endfor %}
   </div>
@@ -10,7 +11,7 @@
     {% for affliation in site.data.authors.affliation_list %}
       <span class="author-block">
         <sup>{{affliation.index}} </sup> {{affliation.name}}
-        </span>
+      </span>
     {% endfor %}
   </div>
 
