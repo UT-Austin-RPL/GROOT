@@ -6,7 +6,7 @@
         content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
   <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Learning Generalizable Manipulation Policies with Object-Centric 3D Representations</title>
+  <title>GROOT: Learning Generalizable Manipulation Policies with Object-Centric 3D Representations</title>
 
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
@@ -67,7 +67,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Learning Generalizable Manipulation Policies with Object-Centric 3D Representations</h1>
+          <h1 class="title is-1 publication-title">GROOT: Learning Generalizable Manipulation Policies with Object-Centric 3D Representations</h1>
           
           <!-- include the title info. It's located in _includes/title_info.html -->
           {% include title_info.html %}
@@ -99,7 +99,7 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          We introduce GROOT, an imitation learning method with object-centric and 3D priors to learn robust policies for vision-based manipulation. GROOT is able to train policies that generalize beyond their initial training conditions. GROOT first constructs object-centric 3D representations that are robust to background changes and camera views, and reason over the representations using a transformer-based policy. At test time, we introduce a segmentation correspondence model that allows policies to reuse their strategies in the case of new object manipulation. Through comprehensive experiments, we validate the robustness of GROOT policies against perceptual variations in both simulated and real-world environments. Their performance excels in all aspects of considered generalization in perception, outperforming traditional pixel-based or object proposal prior methods. We also extensively evaluate GROOT policies on real robots, where we demonstrate the efficacy under very wild changes in setup.
+          We introduce GROOT, an imitation learning method for learning robust policies with object-centric and 3D priors. GROOT builds policies that generalize beyond their initial training conditions for vision-based manipulation. It constructs object-centric 3D representations that are robust toward background changes and camera views and reason over these representations using a transformer-based policy. Furthermore, we introduce a segmentation correspondence model that allows policies to generalize to new objects at test time. Through comprehensive experiments, we validate the robustness of GROOT policies against perceptual variations in simulated and real-world environments. GROOT's performance excels in generalization over background changes, camera viewpoint shifts, and the presence of new object instances, whereas both state-of-the-art end-to-end learning methods and object proposal-based approaches fall short. We also extensively evaluate GROOT policies on real robots, where we demonstrate the efficacy under very wild changes in setup. 
         </div>
       </div>
     </div>
@@ -179,6 +179,7 @@
 <br>
 
 <section class="section">
+
   <div id="real-robot-results-div">
   </div>
   <h3 style="text-align: center!important;" class="title is-5">Success rates (%) of GROOT in real robot tasks.</h3>
@@ -193,9 +194,8 @@
 <section class="section">
   <div class="container is-max-desktop">
 
-    <div class="columns is-centered">
+    <!-- <div class="columns is-centered">
 
-      <!-- Visual Effects. -->
       <div class="column">
         <div class="content">
           <h2 class="title is-3">Visual Effects</h2>
@@ -209,9 +209,7 @@
           </video>
         </div>
       </div>
-      <!--/ Visual Effects. -->
 
-      <!-- Matting. -->
       <div class="column">
         <h2 class="title is-3">Matting</h2>
         <div class="columns is-centered">
@@ -228,8 +226,7 @@
 
         </div>
       </div>
-    </div>
-    <!--/ Matting. -->
+    </div> -->
     <!-- <div class="content" id="plotly-sam"></div> -->
 
     <!-- Segmentation Correspondence Model. -->
@@ -262,7 +259,7 @@
 
         <br>
 
-        <div class="columns is-vcentered interpolation-panel">
+        <!-- <div class="columns is-vcentered interpolation-panel">
           <div class="column is-3 has-text-centered">
             <img src="./static/images/interpolate_start.jpg"
                  class="interpolation-image"
@@ -283,7 +280,7 @@
                  alt="Interpolation end reference image."/>
             <p class="is-bold">End Frame</p>
           </div>
-        </div>
+        </div> -->
         <br/>
         <!--/ Interpolating. -->
 
