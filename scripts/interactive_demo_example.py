@@ -59,7 +59,11 @@ def launch_gui(args):
 
         app = QApplication(sys.argv)
         ex = App(network, resource_manager, s2m_controller, fbrs_controller, config)
-        # sys.exit(app.exec_())    
+
+        # This is to set scribble to be default
+        ex.curr_interaction = 'Scribble'
+        ex.radio_fbrs.toggle() # toggle off the click mode
+        ex.radio_s2m.toggle()  # togle on the scribble mode
         app.exec_()
 
 def main():
@@ -78,8 +82,8 @@ def main():
     That way, you can continue annotation from an interrupted run as long as the same workspace is used.
     """
     # Load from a demonstration dataset
-    parser.add_argument('--images', help='Folders containing input images.', default=None)
-    parser.add_argument('--video', help='Video file readable by OpenCV.', required=True)
+    parser.add_argument('--video', help='Video file readable by OpenCV.', default=None)
+    parser.add_argument('--image', help='Video file readable by OpenCV.', default=None)
     parser.add_argument('--workspace', help='directory for storing buffered images (if needed) and output masks', default=None)
 
     parser.add_argument('--buffer_size', help='Correlate with CPU memory consumption', type=int, default=100)
@@ -101,22 +105,43 @@ def main():
     parser.add_argument('--size', default=480, type=int, 
             help='Resize the shorter side to this size. -1 to use original resolution. ')
     # indicate it's real data
-    parser.add_argument('--real', action='store_true')
     args = parser.parse_args()
 
-    annotation_folder = "example_results/video_annotations"
+    if args.video is None and args.image is None:
+        raise ValueError('Please specify either --video or --image')
+    
+    # priority: image > video > images
+
+    mode = ""
+    if args.image is not None:
+        mode = "image"
+    elif args.video is not None:
+        mode = "video"
+
+
+    annotation_folder = f"example_results/{mode}_annotations"
     tmp_folder = "tmp_images"
 
-    annotation_path = os.path.join(annotation_folder, args.video.split("/")[-1].split(".")[0])
+    if mode == "image":
+        annotation_path = os.path.join(annotation_folder, args.image.split("/")[-1].split(".")[0])
+    elif mode == "video":
+        annotation_path = os.path.join(annotation_folder, args.video.split("/")[-1].split(".")[0])
     tmp_path = tmp_folder
+
+
     os.makedirs(annotation_path, exist_ok=True)
     os.makedirs(tmp_path, exist_ok=True)
-
     os.makedirs(os.path.join(tmp_path, "images"), exist_ok=True)
-    _, first_frame = cv2.VideoCapture(args.video).read()
-    first_frame = cv2.resize(first_frame, (args.size, args.size), interpolation=cv2.INTER_AREA)
-    if args.real:
-        first_frame = cv2.cvtColor(cv2.flip(first_frame, 0), cv2.COLOR_BGR2RGB)
+
+    if mode == "image":
+        first_frame = cv2.imread(args.image)
+        # first_frame = cv2.resize(first_frame, (args.size, args.size), interpolation=cv2.INTER_AREA)
+
+    elif mode == "video":
+        _, first_frame = cv2.VideoCapture(args.video).read()
+        # first_frame = cv2.resize(first_frame, (args.size, args.size), interpolation=cv2.INTER_AREA)
+        # if args.real:
+        #     first_frame = cv2.cvtColor(cv2.flip(first_frame, 0), cv2.COLOR_BGR2RGB)
     cv2.imwrite(os.path.join(os.path.join(tmp_path, "images", "frame.jpg")), first_frame)
 
     args.images = tmp_path

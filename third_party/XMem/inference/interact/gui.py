@@ -71,7 +71,7 @@ class App(QWidget):
         self.commit_button = QPushButton('Commit')
         self.commit_button.clicked.connect(self.on_commit)
 
-        self.forward_run_button = QPushButton('Forward Propagate')
+        self.forward_run_button = QPushButton('Refine Mask')
         self.forward_run_button.clicked.connect(self.on_forward_propagation)
         self.forward_run_button.setMinimumWidth(200)
 
@@ -235,7 +235,7 @@ class App(QWidget):
         navi.addStretch(1)
         navi.addWidget(self.commit_button)
         navi.addWidget(self.forward_run_button)
-        navi.addWidget(self.backward_run_button)
+        # navi.addWidget(self.backward_run_button)
 
         # Drawing area, main canvas and minimap
         draw_area = QHBoxLayout()
@@ -566,7 +566,7 @@ class App(QWidget):
         self.forward_run_button.setEnabled(True)
         self.backward_run_button.setEnabled(True)
         self.clear_mem_button.setEnabled(True)
-        self.forward_run_button.setText('Forward Propagate')
+        self.forward_run_button.setText('Refine Mask')
         self.backward_run_button.setText('Backward Propagate')
         self.console_push_text('Propagation stopped.')
 

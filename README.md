@@ -82,7 +82,11 @@ python scripts/interactive_demo_from_datasets.py --dataset_path DATASET_PATH --n
 By default, we assume you also annotate robotos during this process. This is for better performance of VOS without considering the robot as one of the objects, and also the GROOT policies assume that the input is including the robot point clouds, so the policy will exclude the robot's point clouds. Including this information is also beneficial for conducting ablation studies for your need. The process is adapted from the S2M GUI. 
 
 
-[Replace this line with an actual s2m video example]()
+![Annotating First Frame Example](docs/scribble_demo.gif)
+
+
+This component is made possible by [S2M](https://github.com/hkchengrex/Scribble-to-Mask).
+
 
 ### 3.3 Prepare Training set
 
