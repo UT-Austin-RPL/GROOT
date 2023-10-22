@@ -67,7 +67,7 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">GROOT: Learning Generalizable Manipulation Policies with Object-Centric 3D Representations</h1>
+          <h1 class="title is-2 publication-title">GROOT: Learning Generalizable Manipulation Policies with Object-Centric 3D Representations</h1>
           
           <!-- include the title info. It's located in _includes/title_info.html -->
           {% include title_info.html %}
@@ -87,8 +87,11 @@
       <div class="column is-four-fifths">
         <!-- <h2 class="title is-3">Video</h2> -->
         <div class="publication-video">
-          <iframe src=""
+          <iframe src="https://www.youtube.com/embed/T_wW-Mzt49M?si=oWzuRHBc-zS9O-JT"
                   frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="subtitle">
+          1-min spotlight video. Better view with audio or turn on captions.
         </div>
       </div>
     </div>
@@ -111,20 +114,16 @@
 <br>
 <br>
 
-<section class="hero teaser">
+<!-- <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
       <img id="teaser" src="./static/images/teaser.svg" alt="Nerfies teaser image."/>
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
       <h2 class="subtitle has-text-centered">
          We introduce an imitation learning method, <span class="groot">GROOT</span>,  for training policies that generalize beyond their demonstration settings.
       </h2>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- Carousel Video Example. -->
 <!-- <section class="hero is-small">
@@ -145,32 +144,42 @@
 </section> -->
 <!-- / Carousel Video Example. -->
 
-<hr>
-
 <section class="section">
   <div class="container is-max-desktop">
     <!-- Method Overview. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Method Overview</h2>
-        <div class="content has-text-justified">
-         Placeholder text. 
+        <h2 class="title is-3">Method</h2>
+        <div class="hero-body">
+          <img id="teaser" src="./static/images/teaser.svg" alt="Nerfies teaser image."/>
+          <h2 class="subtitle">
+            GROOT builds object-centric 3D representations to learn generalizable manipulation policies.
+          </h2>
+          <div class="content has-text-justified">
+            GROOT leverages an interactive segmentation model, S2M, to obtain a single-frame annotation from demonstrators. Then a Video Object Segmentation model, XMem, propagates segmentation masks across time frames. The object masks are then back-projected into point clouds, and a transformer-based policy processes the point clouds to output actions.
+        </div>
         </div>
       </div>
     </div>
-    <!--/ Method. -->
-
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video (TBD) </h2>
-        <div class="publication-video">
-          <iframe width="750" height="421" src="" autoplay="true" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    <!--/ Paper video. -->
   </div>
+
+  <div class="container is-max-desktop">
+  <div class="columns is-centered has-text-centered">
+  <div class="column is-four-fifths">
+    <h4 class="subtitle is-3">Segmenetation Correspondence Model (SCM)</h4>
+    <div class="hero-body">
+      <img id="teaser" src="./static/images/scm.svg" alt="Nerfies teaser image."/>
+      <h2 class="subtitle">
+        SCM enables new object generalization. 
+      </h2>
+      <div class="content has-text-justified">
+        GROOT uses SCM based on an open-vocabulary segmentation model (SAM) and a pretrained semantic feature model (DINOv2) to allow generalization to new objects.
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
 </section>
 
 
@@ -180,7 +189,7 @@
 
 <section class="section">
 
-  <div id="real-robot-results-div">
+  <div id="real-robot-results-div" style="justify-content: center;">
   </div>
   <h3 style="text-align: center!important;" class="title is-5">Success rates (%) of GROOT in real robot tasks.</h3>
 </section>
@@ -303,7 +312,7 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <h2 class="title is-3">Failure Example</h2>
-          <p> Some explanation. </p>
+          <p class="content has-text-justified"> Occasionally, GROOT policies will miss grasping by some millimeters or failed to place an object stably. </p>
         </div>
       </div>
     </div>
