@@ -10,7 +10,7 @@
 [Yifeng Zhu](https://www.cs.utexas.edu/~yifengz), [Zhenyu Jiang](https://zhenyujiang.me/), [Peter Stone](https://www.cs.utexas.edu/~pstone), [Yuke Zhu](https://www.cs.utexas.edu/~yukez/)
 
 
-[Project](https://ut-austin-rpl.github.io/GROOT) | [Paper]() |
+[Project](https://ut-austin-rpl.github.io/GROOT) | [Paper]() | [Video](https://youtu.be/T_wW-Mzt49M?si=dFv-NU8itv_SZUpK)
 
 
 Our real robot experiments are based off of the control codebase [Deoxys](https://github.com/UT-Austin-RPL/deoxys_control) and its vision pipeline [Deoxys-Vision](https://github.com/UT-Austin-RPL/deoxys_vision) (Coming soon!).
