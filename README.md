@@ -13,7 +13,7 @@
 [Project](https://ut-austin-rpl.github.io/GROOT) | [Paper]() |
 
 
-Our real robot experiments are based off of the control codebase [Deoxys](https://github.com/UT-Austin-RPL/deoxys_control) and its vision pipeline [Deoxys-Vision](https://github.com/UT-Austin-RPL/deoxys_vision).
+Our real robot experiments are based off of the control codebase [Deoxys](https://github.com/UT-Austin-RPL/deoxys_control) and its vision pipeline [Deoxys-Vision](https://github.com/UT-Austin-RPL/deoxys_vision) (Coming soon!).
 
 ## 1. Installation
 
