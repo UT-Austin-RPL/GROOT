@@ -21,6 +21,12 @@ Our real robot experiments are based off of the control codebase [Deoxys](https:
 pip install -r requirements.txt
 ```
 
+If you want to use this as a component, there is a easy way to allow you to access functions in groot. Simple do the following in your virtual environment:
+
+```shell
+pip install -e .
+```
+
 ### 1.1 Prerequisite
 
 We need to install the vision models and checkpoints in order to run GROOT codebase. Here is a simple bash script that takes care of everything and also make sure that you can download the same commits of the repos as I used for my experiments. 
@@ -157,7 +163,7 @@ groot/
     #    - Backprojection to point clouds
     #    - SAM result on robot data
     #    - DINOv2 result on robot data
-    module_examples.ipynb
+    walkthrough_example.ipynb
 
     # Scripts that include:
     #    - Scribble to mask annotation
@@ -166,19 +172,20 @@ groot/
     #    - Evaluate robot policies
     scripts/
        
-    # Groot algo repo that stores most of the policy components
-    groot_algo/
-        
-    # separate model for Segmentation Corresponde Model (Paper Section 3.4)
-    segmentation_correspondence_model/ # segmentation correspondence model
+    groot_imitation/
+        # Groot algo repo that stores most of the policy components
+        groot_algo/
+            
+        # separate model for Segmentation Corresponde Model (Paper Section 3.4)
+        segmentation_correspondence_model/ # segmentation correspondence model
 
+        ## Configuration for third party models
+        vision_model_configs/
     # Necessary scripts for real robot control
     real_robot_scripts/
 
 
     # third party models (Large vision models)
-    ## Configuration
-    vision_model_configs/
     ## Third party code repo
     third_party/
 ```
