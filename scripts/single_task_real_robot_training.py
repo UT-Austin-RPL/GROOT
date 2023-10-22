@@ -33,9 +33,9 @@ from functools import partial
 import init_path
 
 from groot_imitation.groot_algo import toggle_data_modality_processing
-from groot_imitation.groot_algo.vos_3d_transformer import VOS3DSingleTask
+from groot_imitation.groot_algo.groot_transformer import GROOTSingleTask
 from robomimic.utils.obs_utils import Modality
-from groot_imitation.groot_algo import PcdModality, NormalizedPcdModality, WristDepthModality, GroupedPcdModality, VOS_3D_Real_Robot_Benchmark
+from groot_imitation.groot_algo import PcdModality, NormalizedPcdModality, WristDepthModality, GroupedPcdModality, GROOT_Real_Robot_Benchmark
 from groot_imitation.groot_algo.misc_utils import normalize_pcd
 
 def create_experiment_dir(cfg):

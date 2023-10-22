@@ -8,7 +8,7 @@ defaults:
 
 task_id: 3
 
-benchmark_name: VOS_3D_Real_Robot_Benchmark
+benchmark_name: GROOT_Real_Robot_Benchmark
 
 policy:
   pcd_aug:

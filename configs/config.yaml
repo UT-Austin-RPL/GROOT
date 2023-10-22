@@ -7,7 +7,7 @@ defaults:
   - policy: groot_real_robot_no_wrist_transformer_policy
   - train: default
   - eval: default
-  - lifelong: vos_3d_single_task
+  - lifelong: groot_single_task
   - real_robot_experiments: null
   - test: null
 
@@ -23,7 +23,7 @@ task_embedding_format: "bert"
 task_embedding_one_hot_offset: 1
 pretrain: false
 pretrain_model_path: ""
-benchmark_name: "VOS_3D_Benchmark"
+benchmark_name: "GROOT_Real_Robot_Benchmark"
 task_id: 0
 
 

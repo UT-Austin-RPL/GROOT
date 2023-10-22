@@ -30,10 +30,10 @@ from libero.lifelong.utils import (NpEncoder, compute_flops, control_seed, safe_
 from libero.libero.utils.time_utils import Timer
 
 import init_path
-from groot_imitation.groot_algo.vos_3d_transformer import VOS3DSingleTask
+from groot_imitation.groot_algo.groot_transformer import GROOTSingleTask
 from groot_imitation.groot_algo.baselines import BCRNNRGBDPolicy
 from robomimic.utils.obs_utils import Modality
-from groot_imitation.groot_algo import PcdModality, NormalizedPcdModality, VOS_3D_Benchmark, WristDepthModality, GroupedPcdModality, VOS_3D_Ablation_Augmentation_Benchmark, VOS_3D_Ablation_Grouping_Benchmark
+from groot_imitation.groot_algo import PcdModality, NormalizedPcdModality, GROOT_Benchmark, WristDepthModality, GroupedPcdModality
 
 
 @hydra.main(config_path="../configs", config_name="config", version_base=None)

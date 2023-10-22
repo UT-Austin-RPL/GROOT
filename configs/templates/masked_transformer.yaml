@@ -1,7 +1,7 @@
 # @package _global_
 
 defaults:
-- override /policy: vos_3d_masked_transformer_policy
+- override /policy: groot_masked_transformer_policy
 - override /policy/data_augmentation@policy.pcd_aug: se3_augmentation_3
 - override /train/scheduler: cosine_annealing_warm_restarts
 

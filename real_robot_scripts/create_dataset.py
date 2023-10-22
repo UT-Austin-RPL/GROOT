@@ -14,11 +14,11 @@ import numpy as np
 
 from deoxys.utils import YamlConfig
 
-from rpl_vision_utils.utils import img_utils as ImgUtils
-from rpl_vision_utils.utils.img_utils import load_depth
-from rpl_vision_utils.utils.calibration_utils import load_default_extrinsics, load_default_intrinsics
+from deoxys_vision.utils import img_utils as ImgUtils
+from deoxys_vision.utils.img_utils import load_depth
+from deoxys_vision.utils.calibration_utils import load_default_extrinsics, load_default_intrinsics
 
-from vos_3d_img_utils import *
+from groot_img_utils import *
 
 def parse_args():
     parser = argparse.ArgumentParser()

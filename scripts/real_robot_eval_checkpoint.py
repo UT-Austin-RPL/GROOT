@@ -38,9 +38,9 @@ from groot_imitation.groot_algo.o3d_modules import O3DPointCloud, convert_conven
 from groot_imitation.groot_algo.eval_utils import raw_real_obs_to_tensor_obs
 from groot_imitation.groot_algo.dataset_preprocessing.pcd_generation import object_pcd_fn
 
-from groot_imitation.groot_algo.vos_3d_transformer import VOS3DSingleTask
+from groot_imitation.groot_algo.groot_transformer import GROOTSingleTask
 from robomimic.utils.obs_utils import Modality
-from groot_imitation.groot_algo import PcdModality, NormalizedPcdModality,WristDepthModality, GroupedPcdModality, normalize_real_robot_point_cloud, VOS_3D_Real_Robot_Benchmark
+from groot_imitation.groot_algo import PcdModality, NormalizedPcdModality,WristDepthModality, GroupedPcdModality, normalize_real_robot_point_cloud, GROOT_Real_Robot_Benchmark
 
 from groot_imitation.groot_algo.sam_operator import SAMOperator
 from groot_imitation.groot_algo.dino_features import DinoV2ImageProcessor

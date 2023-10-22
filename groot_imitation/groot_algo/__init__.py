@@ -193,10 +193,10 @@ def toggle_data_modality_processing(func, real_robot=False):
 # |____/ \___|_| |_|\___|_| |_|_| |_| |_|\__,_|_|  |_|\_\___/
 
 @register_benchmark
-class VOS_3D_Real_Robot_Benchmark(Benchmark):
+class GROOT_Real_Robot_Benchmark(Benchmark):
     def __init__(self, task_order_index=0):
         super().__init__(task_order_index=task_order_index)
-        self.name = "VOS_3D_Benchmark"
+        self.name = "GROOT_Benchmark"
         self.task_orders = [[0, 1, 2, 3, 4]]
         self._make_benchmark()
 
@@ -226,10 +226,10 @@ class VOS_3D_Real_Robot_Benchmark(Benchmark):
 
 
 # @register_benchmark
-# class VOS_3D_Simulation_Benchmark(Benchmark):
+# class GROOT_Simulation_Benchmark(Benchmark):
 #     def __init__(self, task_order_index=0):
 #         super().__init__(task_order_index=task_order_index)
-#         self.name = "VOS_3D_Simulation_Benchmark"
+#         self.name = "GROOT_Simulation_Benchmark"
 #         self.task_orders = [[0, 1, 2, 3, 4, 5, 6]]
 #         self._make_benchmark()
 
