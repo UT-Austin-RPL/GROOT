@@ -181,6 +181,8 @@ groot/
 
         ## Configuration for third party models
         vision_model_configs/
+
+
     # Necessary scripts for real robot control
     real_robot_scripts/
 
