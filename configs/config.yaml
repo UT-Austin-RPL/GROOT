@@ -8,18 +8,7 @@ defaults:
   - train: default
   - eval: default
   - lifelong: vos_3d_single_task
-  # - reproduce_experiment: null
-  - experiments: null
-  # - aug_experiments: null
-  # - normalized_experiments: null
-  # - masked_experiments: null
-  # - robot_masked_experiments: null
-  # - ablation_dataset_aug_experiments: null
-  # - ablation_grouping_experiments: null
-  # - simulation_experiments: null
-  # - real_robot_experiments: null
-  # - viola_experiments: null
-  # - mae_experiments: null
+  - real_robot_experiments: null
   - test: null
 
 seed: 10000
