@@ -8,7 +8,4 @@ sys.path.append("./third_party/XMem")
 sys.path.append("./third_party/XMem/model")
 sys.path.append("./third_party/XMem/util")
 sys.path.append("./third_party/XMem/inference")
-# sys.path.append("./third_party/XMem/inference/interact")
 
-# import robosuite.macros as macros
-# macros.IMAGE_CONVENTION = "opencv"
