@@ -15,9 +15,9 @@ from collections import Counter
 
 from einops import rearrange
 
-from vos_3d_algo.misc_utils import get_palette, resize_image_to_same_shape
-from vos_3d_algo.sam_operator import SAMOperator
-from vos_3d_algo.dino_features import DinoV2ImageProcessor, compute_affinity, rescale_feature_map, generate_video_from_affinity
+from groot_imitation.groot_algo.misc_utils import get_palette, resize_image_to_same_shape
+from groot_imitation.groot_algo.sam_operator import SAMOperator
+from groot_imitation.groot_algo.dino_features import DinoV2ImageProcessor, compute_affinity, rescale_feature_map, generate_video_from_affinity
 
 def compute_iou(reference_mask, segmentation_masks):
     # Convert to binary arrays

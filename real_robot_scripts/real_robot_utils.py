@@ -5,7 +5,7 @@ from deoxys_vision.networking.camera_redis_interface import CameraRedisSubInterf
 from deoxys_vision.utils.calibration_utils import load_default_extrinsics, load_default_intrinsics
 from deoxys_vision.utils.camera_utils import assert_camera_ref_convention, get_camera_info
 
-from vos_3d_algo.o3d_modules import O3DPointCloud, convert_convention
+from groot_imitation.groot_algo.o3d_modules import O3DPointCloud, convert_convention
 from real_robot_scripts.groot_img_utils import ImageProcessor
 
 class RealRobotObsProcessor():

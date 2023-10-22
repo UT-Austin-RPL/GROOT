@@ -9,7 +9,7 @@ import torch.nn.functional as F
 from pathlib import Path
 from torchvision import transforms
 
-from vos_3d_algo import GROOT_ROOT_PATH
+from groot_imitation.groot_algo import GROOT_ROOT_PATH
 
 from third_party.XMem.model.network import XMem
 from third_party.XMem.inference.inference_core import InferenceCore

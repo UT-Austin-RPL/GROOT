@@ -18,10 +18,10 @@ import shutil
 import pyfiglet
 
 import init_path
-from vos_3d_algo.misc_utils import get_annotation_path, edit_h5py_datasets, Timer
-from vos_3d_algo.dataset_preprocessing.vos_annotation import dataset_vos_annotation
-from vos_3d_algo.dataset_preprocessing.pcd_generation import object_pcd_generation, pcd_grouping
-from vos_3d_algo.xmem_tracker import XMemTracker
+from groot_imitation.groot_algo.misc_utils import get_annotation_path, edit_h5py_datasets, Timer
+from groot_imitation.groot_algo.dataset_preprocessing.vos_annotation import dataset_vos_annotation
+from groot_imitation.groot_algo.dataset_preprocessing.pcd_generation import object_pcd_generation, pcd_grouping
+from groot_imitation.groot_algo.xmem_tracker import XMemTracker
 
 
 @hydra.main(config_path="./dataset_configs", config_name="config", version_base=None)

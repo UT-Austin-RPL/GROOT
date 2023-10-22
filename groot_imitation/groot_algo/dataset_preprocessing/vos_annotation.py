@@ -10,9 +10,9 @@ from tqdm import tqdm
 from kaede_utils.visualization_utils.video_utils import KaedeVideoWriter
 
 import init_path
-from vos_3d_algo.xmem_tracker import XMemTracker
-from vos_3d_algo.misc_utils import get_annotation_path, get_first_frame_annotation, VideoWriter
-from vos_3d_algo.o3d_modules import convert_convention
+from groot_imitation.groot_algo.xmem_tracker import XMemTracker
+from groot_imitation.groot_algo.misc_utils import get_annotation_path, get_first_frame_annotation, VideoWriter
+from groot_imitation.groot_algo.o3d_modules import convert_convention
 
 # def parse_args():
 #     args = argparse.ArgumentParser(description='Get all the masks for the demonstration dataset')

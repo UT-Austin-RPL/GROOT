@@ -16,12 +16,12 @@ from easydict import EasyDict
 from segment_anything import SamAutomaticMaskGenerator, sam_model_registry
 
 
-from vos_3d_algo import GROOT_ROOT_PATH
+from groot_imitation.groot_algo import GROOT_ROOT_PATH
 
 class SAMOperator:
     def __init__(self, 
                  model_type="vit_b",
-                 checkpoint=os.path.join(GROOT_ROOT_PATH, "third_party/sam_checkpoints/sam_vit_b_01ec64.pth"),
+                 checkpoint=os.path.join(GROOT_ROOT_PATH, "../" "third_party/sam_checkpoints/sam_vit_b_01ec64.pth"),
                  sam_config_file=os.path.join(GROOT_ROOT_PATH, "vision_model_configs", "sam_config.yaml"),
                  device="cuda:0", 
                  output_mode="binary_mask",

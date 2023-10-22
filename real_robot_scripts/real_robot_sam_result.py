@@ -13,11 +13,11 @@ from PIL import Image
 import shutil
 
 import init_path
-from vos_3d_algo.misc_utils import get_annotation_path, get_first_frame_annotation, get_first_frame_annotation_from_dataset
+from groot_imitation.groot_algo.misc_utils import get_annotation_path, get_first_frame_annotation, get_first_frame_annotation_from_dataset
 
 from auto_annotation.annotation_utils import get_first_frame_folder, get_first_frame_segmentation_folder
 
-from vos_3d_algo.dino_features import DinoV2ImageProcessor, compute_affinity, rescale_feature_map
+from groot_imitation.groot_algo.dino_features import DinoV2ImageProcessor, compute_affinity, rescale_feature_map
 
 
 from deoxys.utils import YamlConfig

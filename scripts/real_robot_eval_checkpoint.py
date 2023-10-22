@@ -31,19 +31,19 @@ from rpl_vision_utils.networking.camera_redis_interface import CameraRedisSubInt
 from kaede_utils.visualization_utils.video_utils import KaedeVideoWriter
 
 import init_path
-from vos_3d_algo import toggle_data_modality_processing, GROOT_ROOT_PATH
-from vos_3d_algo.xmem_tracker import XMemTracker
-from vos_3d_algo.misc_utils import add_palette_on_mask, get_annotation_path, get_first_frame_annotation, get_first_frame_annotation_from_dataset, overlay_xmem_mask_on_image, mask_to_rgb, resize_image_to_same_shape, normalize_pcd, get_palette
-from vos_3d_algo.o3d_modules import O3DPointCloud, convert_convention
-from vos_3d_algo.eval_utils import raw_real_obs_to_tensor_obs
-from vos_3d_algo.dataset_preprocessing.pcd_generation import object_pcd_fn
+from groot_imitation.groot_algo import toggle_data_modality_processing, GROOT_ROOT_PATH
+from groot_imitation.groot_algo.xmem_tracker import XMemTracker
+from groot_imitation.groot_algo.misc_utils import add_palette_on_mask, get_annotation_path, get_first_frame_annotation, get_first_frame_annotation_from_dataset, overlay_xmem_mask_on_image, mask_to_rgb, resize_image_to_same_shape, normalize_pcd, get_palette
+from groot_imitation.groot_algo.o3d_modules import O3DPointCloud, convert_convention
+from groot_imitation.groot_algo.eval_utils import raw_real_obs_to_tensor_obs
+from groot_imitation.groot_algo.dataset_preprocessing.pcd_generation import object_pcd_fn
 
-from vos_3d_algo.vos_3d_transformer import VOS3DSingleTask
+from groot_imitation.groot_algo.vos_3d_transformer import VOS3DSingleTask
 from robomimic.utils.obs_utils import Modality
-from vos_3d_algo import PcdModality, NormalizedPcdModality,WristDepthModality, GroupedPcdModality, normalize_real_robot_point_cloud, VOS_3D_Real_Robot_Benchmark
+from groot_imitation.groot_algo import PcdModality, NormalizedPcdModality,WristDepthModality, GroupedPcdModality, normalize_real_robot_point_cloud, VOS_3D_Real_Robot_Benchmark
 
-from vos_3d_algo.sam_operator import SAMOperator
-from vos_3d_algo.dino_features import DinoV2ImageProcessor
+from groot_imitation.groot_algo.sam_operator import SAMOperator
+from groot_imitation.groot_algo.dino_features import DinoV2ImageProcessor
 from segmentation_correspondence_model.scm import SegmentationCorrespondenceModel
 
 from real_robot_scripts.groot_img_utils import ImageProcessor

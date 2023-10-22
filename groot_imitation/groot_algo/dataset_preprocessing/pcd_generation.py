@@ -12,9 +12,9 @@ from torch.multiprocessing import Pool, Process, set_start_method, get_start_met
 
 from functools import partial
 
-from vos_3d_algo.o3d_modules import convert_convention, O3DPointCloud
-from vos_3d_algo.misc_utils import resize_image_to_same_shape, get_first_frame_annotation, normalize_pcd, rotate_camera_pose, get_transformed_depth_img, depth_to_rgb, VideoWriter, Timer
-from vos_3d_algo.point_mae_modules import Group
+from groot_imitation.groot_algo.o3d_modules import convert_convention, O3DPointCloud
+from groot_imitation.groot_algo.misc_utils import resize_image_to_same_shape, get_first_frame_annotation, normalize_pcd, rotate_camera_pose, get_transformed_depth_img, depth_to_rgb, VideoWriter, Timer
+from groot_imitation.groot_algo.point_mae_modules import Group
 
 def scene_pcd_fn(
         cfg,

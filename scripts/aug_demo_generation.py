@@ -15,10 +15,10 @@ from kaede_utils.visualization_utils.image_utils import depth_to_rgb
 
 
 import init_path
-from vos_3d_algo.xmem_tracker import XMemTracker
-from vos_3d_algo.misc_utils import get_annotation_path, get_first_frame_annotation
-from vos_3d_algo.o3d_modules import O3DPointCloud, convert_convention
-from vos_3d_algo.env_wrapper import rotate_real_camera
+from groot_imitation.groot_algo.xmem_tracker import XMemTracker
+from groot_imitation.groot_algo.misc_utils import get_annotation_path, get_first_frame_annotation
+from groot_imitation.groot_algo.o3d_modules import O3DPointCloud, convert_convention
+from groot_imitation.groot_algo.env_wrapper import rotate_real_camera
 
 from scipy.ndimage import binary_erosion
 

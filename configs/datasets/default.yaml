@@ -1,0 +1,14 @@
+max_points: 512
+num_group: 10
+group_size: 64
+
+# dataset point cloud normalization range
+max_array: [0.69943695, 0.5, 0.45784091]
+min_array: [0.0, -0.5, 0.0]
+
+# configuration for augmenting depth point clouds
+aug:
+  workspace_center: [0.6, 0.0, 0.0]
+  rotations: [30]
+
+erode: false

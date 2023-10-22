@@ -18,8 +18,8 @@ from dinov2.eval.utils import ModelWithIntermediateLayers
 
 from sklearn.decomposition import PCA
 
-from vos_3d_algo import GROOT_ROOT_PATH
-from vos_3d_algo.misc_utils import VideoWriter
+from groot_imitation.groot_algo import GROOT_ROOT_PATH
+from groot_imitation.groot_algo.misc_utils import VideoWriter
 
 class DinoV2ImageProcessor(object):
     def __init__(self, args=None):
@@ -28,7 +28,7 @@ class DinoV2ImageProcessor(object):
             self.args.output_dir = ''
             self.args.opts = []
             self.args.pretrained_weights = "https://dl.fbaipublicfiles.com/dinov2/dinov2_vitb14/dinov2_vitb14_pretrain.pth"
-            self.args.config_file = os.path.join(GROOT_ROOT_PATH, "third_party/dinov2/dinov2/configs/eval/vitb14_pretrain.yaml")
+            self.args.config_file = os.path.join(GROOT_ROOT_PATH, "../", "third_party/dinov2/dinov2/configs/eval/vitb14_pretrain.yaml")
         else:
             self.args = args
         # print("*****")

@@ -10,7 +10,7 @@ try:
     import robosuite.utils.transform_utils as T
     import robosuite.macros as macros
     from kaede_utils.robosuite_utils.xml_utils import postprocess_model_xml, get_camera_info_from_xml
-    from vos_3d_algo.env_wrapper import rotate_camera
+    from groot_imitation.groot_algo.env_wrapper import rotate_camera
 except:
     pass
 

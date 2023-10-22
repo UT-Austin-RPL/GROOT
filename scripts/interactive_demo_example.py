@@ -17,7 +17,7 @@ import torch
 import h5py
 
 import init_path
-from vos_3d_algo.o3d_modules import O3DPointCloud, convert_convention
+from groot_imitation.groot_algo.o3d_modules import O3DPointCloud, convert_convention
 from model.network import XMem
 from inference.interact.s2m_controller import S2MController
 from inference.interact.fbrs_controller import FBRSController

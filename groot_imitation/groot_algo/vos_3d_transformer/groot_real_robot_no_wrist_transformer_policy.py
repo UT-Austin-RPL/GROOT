@@ -11,8 +11,8 @@ from libero.lifelong.models.modules.transformer_modules import *
 from libero.lifelong.models.base_policy import PolicyMeta
 from libero.lifelong.models.policy_head import *
 
-from vos_3d_algo.modules import *
-from vos_3d_algo.point_mae_modules import *
+from groot_imitation.groot_algo.modules import *
+from groot_imitation.groot_algo.point_mae_modules import *
 
 
 ###############################################################################
