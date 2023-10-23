@@ -87,7 +87,7 @@ $(document).ready(function() {
 
       const hoveredObject = mask[y][x];
       drawImage(maskCtx, mask, hoveredObject);
-      const newHoverObject = new_mask[y][x];
+      const newHoverObject = mask[y][x];
       drawImage(dino_maskCtx, new_mask, newHoverObject);
 
     });
@@ -124,14 +124,9 @@ $(document).ready(function() {
     function drawImage(targetCtx, maskImage, highlightedObject) {
       const imgData = targetCtx.createImageData(mask_canvas.width, mask_canvas.height);
       const len = imgData.data.length;
-      // print mask shape to console
-    // console.log(mask.length, mask[0].length);
-    // print the first element of the mask
-    // console.log(mask[300][0]);
 
     let color = getColorForNumber(highlightedObject, davisPalette);
-    // console.log(targetCtx, highlightedObject);
-    // console.log(color);
+
       for (let i = 0; i < len; i += 4) {
         const x = (i / 4) % mask_canvas.width;
         const y = Math.floor(i / 4 / mask_canvas.width);
