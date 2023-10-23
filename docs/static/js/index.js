@@ -132,14 +132,14 @@ $(document).ready(function() {
         const y = Math.floor(i / 4 / mask_canvas.width);
         const object = maskImage[y][x];
         if (object === highlightedObject) {
-          imgData.data[i] = color[0]; // red
+          imgData.data[i] = color[0];
           imgData.data[i + 1] = color[1];
           imgData.data[i + 2] = color[2];
           imgData.data[i + 3] = 200; // full opacity
         } else {
-          imgData.data[i] = 0;
-          imgData.data[i + 1] = 0;
-          imgData.data[i + 2] = 0;
+          imgData.data[i] = 255;
+          imgData.data[i + 1] = 255;
+          imgData.data[i + 2] = 255;
           imgData.data[i + 3] = 50; // partial opacity
         }
       }

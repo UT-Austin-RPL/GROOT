@@ -166,7 +166,7 @@
   <div class="container is-max-desktop">
   <div class="columns is-centered has-text-centered">
   <div class="column is-four-fifths">
-    <h4 class="subtitle is-3">Segmenetation Correspondence Model (SCM)</h4>
+    <h4 class="subtitle is-3">Segmentation Correspondence Model (SCM)</h4>
     <div class="hero-body">
       <img id="teaser" src="./static/images/scm.svg" alt="Nerfies teaser image."/>
       <h2 class="subtitle">
@@ -182,61 +182,12 @@
 </div>
 </section>
 
-
-<hr>
-<br>
-<br>
-
-<section class="section">
-
-  <div id="real-robot-results-div" style="justify-content: center;">
-  </div>
-  <h3 style="text-align: center!important;" class="title is-5">Success rates (%) of GROOT in real robot tasks.</h3>
-</section>
-
-<br>
-
 <hr>
 <br>
 <br>
 
 <section class="section">
   <div class="container is-max-desktop">
-
-    <!-- <div class="columns is-centered">
-
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
-            </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="./static/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
-          </div>
-
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="content" id="plotly-sam"></div> -->
 
     <!-- Segmentation Correspondence Model. -->
     <div class="columns is-centered">
@@ -267,39 +218,29 @@
         </div>
 
         <br>
-
-        <!-- <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div> -->
         <br/>
-        <!--/ Interpolating. -->
-
       </div>
     </div>
     <!--/ Segmentation Correspondence Model. -->
 </section>
 
 <br>
+
 <hr>
+<br>
+<br>
+
+<section class="section">
+
+  <div id="real-robot-results-div" style="justify-content: center;">
+  </div>
+  <h3 style="text-align: center!important;" class="title is-5">Success rates (%) of GROOT in real robot tasks.</h3>
+</section>
+
+<br>
+
+<hr>
+<br>
 <br>
 
 <!-- Carousel Video of Failure Rollouts. -->
