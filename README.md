@@ -145,7 +145,7 @@ And the evaluation script will retrieve the image and annoation from `annotation
 1. Run checkpoints:
 
 ``` shell
-python eval_scripts/real_robot_eval_checkpoint.py --checkpoint-dir experiments_real/VOS_3D_Real_Robot_Benchmark_pogba/stamp_paper_aug/VOS3DSingleTask/VOS3DRealRobotMaskedNoWristTransformerPolicy_seed10000/run_002 --checkpoint-idx 100 --experiment-config real_robot_scripts/eval_new_instances/eval_new_instance_3.yaml
+python scripts/real_robot_eval_checkpoint.py --checkpoint-dir experiments_real/VOS_3D_Real_Robot_Benchmark_pogba/stamp_paper_aug/VOS3DSingleTask/VOS3DRealRobotMaskedNoWristTransformerPolicy_seed10000/run_002 --checkpoint-idx 100 --experiment-config real_robot_scripts/eval_new_instances/eval_new_instance_3.yaml
 ```
 Some common configs are pre-defined in a yaml file, and you only need
 to specify the yaml file in the argument `--experiment-config`.
